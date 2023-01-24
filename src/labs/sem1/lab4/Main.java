@@ -1,44 +1,38 @@
 package labs.sem1.lab4;
 
-// TODO проверки:
-// - запрет повторений
-// - add и remove
-// - equals
-
 public class Main {
   public static void main(String[] args) {
-    SortedIntegerList list = new SortedIntegerList();
+    // проверка запрета повторений
+    SortedIntegerList uniqueList = new SortedIntegerList(false);
+    SortedIntegerList originalList = new SortedIntegerList(true);
 
-    list.add(1);
-    list.add(2);
-    list.add(3);
-    list.add(4);
-    list.add(5);
-    System.out.println(list);
+    // проверка добавления
+    for (int i = 0; i < 10; i++) {
+      uniqueList.add(i);
+      uniqueList.add(i);
+      originalList.add(i);
+      originalList.add(i);
+    }
 
-    list.add(3);
-    list.add(3);
-    System.out.println(list);
+    // проверка equals
+    System.out.println("uniqueList: " + uniqueList);
+    System.out.println("originalList: " + originalList);
+    System.out.println(
+        "uniqueList.equals(originalList): " +
+            uniqueList.equals(originalList));
 
-    list.add(0);
-    System.out.println(list);
+    // проверка удаления
+    for (int i = 0; i < 10; i++) {
+      originalList.remove(i);
+    }
 
-    list.add(6);
-    System.out.println(list);
+    System.out.println("originalList after remove: " + originalList);
+    System.out.println(
+        "uniqueList.equals(originalList): " +
+            uniqueList.equals(originalList));
 
-    list.add(4);
-    System.out.println(list);
-
-    list.remove(3);
-    System.out.println(list);
-
-    list.remove(3);
-    System.out.println(list);
-
-    list.remove(4);
-    System.out.println(list);
-
-    list.remove(3);
-    System.out.println(list);
+    System.out.println(
+        "uniqueList.equals(uniqueList): " +
+            uniqueList.equals(uniqueList));
   }
 }
