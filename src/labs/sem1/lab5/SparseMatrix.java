@@ -67,6 +67,14 @@ public class SparseMatrix extends Matrix {
     elements.add(new SparseMatrixElement(row, column, value));
   }
 
+  public SparseMatrix add(SparseMatrix matrix) {
+    return (SparseMatrix) super.add(matrix);
+  }
+
+  public SparseMatrix multiply(SparseMatrix matrix) {
+    return (SparseMatrix) super.multiply(matrix);
+  }
+
   public Matrix createMatrix(int rows, int columns) {
     return new SparseMatrix(rows, columns);
   }

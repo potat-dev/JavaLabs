@@ -7,30 +7,47 @@ public class Main {
     // разреженных матриц. Проверьте, что сложение и умножение для разных видов
     // матриц дает одинаковые результаты
 
-    final int matrixSize = 10;
-    final int elementsCount = 10;
+    final int matrixSize = 200;
+    final int elementsCount = 200;
 
-    Matrix[] matrices = new Matrix[4];
+    SquareMatrix[] squareMatrices = new SquareMatrix[4];
+    SparseMatrix[] sparseMatrices = new SparseMatrix[4];
     for (int i = 0; i < 4; i++) {
-      matrices[i] = new SparseMatrix(matrixSize);
+      squareMatrices[i] = new SquareMatrix(matrixSize);
+      sparseMatrices[i] = new SparseMatrix(matrixSize);
     }
 
-    for (int i = 0; i < matrices.length; i++) {
+    // первые две матрицы - исходные, вторые две - результаты
+    for (int i = 0; i < 2; i++) {
       for (int j = 0; j < elementsCount; j++) {
-        matrices[i].setElement(
-            (int) (Math.random() * matrixSize),
-            (int) (Math.random() * matrixSize),
-            (int) (Math.random() * 100));
+        int row = (int) (Math.random() * matrixSize);
+        int column = (int) (Math.random() * matrixSize);
+        double value = Math.random() * 1000;
+        squareMatrices[i].setElement(row, column, value);
+        sparseMatrices[i].setElement(row, column, value);
       }
     }
 
-    matrices[2] = matrices[0].add(matrices[1]);
-    matrices[3] = matrices[0].multiply(matrices[1]);
+    // square matrices operations
+    System.out.print("adding... ");
+    squareMatrices[2] = squareMatrices[0].add(squareMatrices[1]);
+    System.out.println("done");
+    System.out.print("multiplying... ");
+    squareMatrices[3] = squareMatrices[0].multiply(squareMatrices[1]);
+    System.out.println("done");
 
-    for (int i = 0; i < matrices.length; i++) {
-      System.out.println("Matrix " + i + ":");
-      System.out.println(matrices[i]);
-      System.out.println();
+    // sparse matrices operations
+    System.out.print("adding... ");
+    sparseMatrices[2] = sparseMatrices[0].add(sparseMatrices[1]);
+    System.out.println("done");
+    System.out.print("multiplying... ");
+    sparseMatrices[3] = sparseMatrices[0].multiply(sparseMatrices[1]);
+    System.out.println("done");
+
+    // проверка на равенство
+    for (int i = 0; i < 4; i++) {
+      System.out.print("square matrix " + i + " equals sparse matrix " + i + ": ");
+      System.out.println(squareMatrices[i].equals((Matrix) sparseMatrices[i]));
     }
   }
 }

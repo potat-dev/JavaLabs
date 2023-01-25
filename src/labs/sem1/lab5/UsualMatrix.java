@@ -16,6 +16,14 @@ public class UsualMatrix extends Matrix {
     matrix[row][column] = value;
   }
 
+  public UsualMatrix add(UsualMatrix matrix) {
+    return (UsualMatrix) super.add(matrix);
+  }
+
+  public UsualMatrix multiply(UsualMatrix matrix) {
+    return (UsualMatrix) super.multiply(matrix);
+  }
+
   public Matrix createMatrix(int rows, int columns) {
     return new UsualMatrix(rows, columns);
   }

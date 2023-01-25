@@ -34,6 +34,10 @@ public abstract class Matrix implements IMatrix {
     Matrix result = createMatrix(getRows(), getColumns());
 
     for (int i = 0; i < getRows(); i++) {
+      if (i % 10 == 0) {
+        System.out.println("row " + i);
+      }
+
       for (int j = 0; j < getColumns(); j++) {
         result.setElement(i, j, getElement(i, j) + matrix.getElement(i, j));
       }
@@ -50,6 +54,10 @@ public abstract class Matrix implements IMatrix {
     Matrix result = createMatrix(getRows(), matrix.getColumns());
 
     for (int i = 0; i < getRows(); i++) {
+      if (i % 10 == 0) {
+        System.out.println("row " + i);
+      }
+
       for (int j = 0; j < matrix.getColumns(); j++) {
         double sum = 0;
 
@@ -79,9 +87,34 @@ public abstract class Matrix implements IMatrix {
     return builder.toString();
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+
+    // if (getClass() != obj.getClass()) {
+    // return false;
+    // }
+
+    Matrix matrix = (Matrix) obj;
+
+    if (getRows() != matrix.getRows() || getColumns() != matrix.getColumns()) {
+      return false;
+    }
+
+    for (int i = 0; i < getRows(); i++) {
+      for (int j = 0; j < getColumns(); j++) {
+        if (getElement(i, j) != matrix.getElement(i, j)) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   // метод, который должен быть переопределен в наследниках
-  protected abstract Matrix createMatrix(int rows, int columns);
   // почему не конструктор? потому что конструкторы не могут быть абстрактными
-  // почему не статический метод? потому что он должен быть переопределен в
-  // наследниках
+  protected abstract Matrix createMatrix(int rows, int columns);
 }

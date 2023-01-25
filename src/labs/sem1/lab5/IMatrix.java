@@ -1,8 +1,6 @@
 package labs.sem1.lab5;
 
 public interface IMatrix {
-  // setElement, getElement, getRows, getColumns
-
   public int getRows();
 
   public int getColumns();
