@@ -1,21 +1,13 @@
 package labs.sem1.lab6.task2;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import java.io.File;
-import java.io.IOException;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 
 // Пример вызова:
-// java EncodingConverter in.txt out.txt UTF-8 windows-1251
+// java EncodingConverter in.txt out.txt utf8 cp1251
 
 public class EncodingConverter {
   public static void main(String[] args) {
@@ -31,13 +23,23 @@ public class EncodingConverter {
       return;
     }
 
-    // get all possible encodings
-    List<String> encodings = Arrays.asList(Charset.availableCharsets().keySet().toArray(new String[0]));
+    // Create a list of all encodings supported by the JVM, including aliases.
+    String[] encodings = Charset.availableCharsets().keySet().toArray(new String[0]);
+    ArrayList<String> charsets = new ArrayList<String>(Arrays.asList(encodings));
+    for (String encoding : encodings) {
+      charsets.addAll(Charset.availableCharsets().get(encoding).aliases());
+    }
 
-    // check if args[2] and args[3] are in encodings
-    if (!encodings.contains(args[2]) || !encodings.contains(args[3])) {
-      System.out.println("Invalid encoding");
-      return;
+    // Check if args[2] and args[3] are valid encodings. Use the original
+    // names for encodings (case-insensitive -> case-sensitive).
+    for (int i = 2; i < 4; i++) {
+      final int j = i;
+      try {
+        args[j] = charsets.stream().filter(charset -> charset.equalsIgnoreCase(args[j])).findFirst().get();
+      } catch (Exception e) {
+        System.out.println("Invalid encoding");
+        return;
+      }
     }
 
     try {
