@@ -2,10 +2,6 @@ package labs.sem1.lab5;
 
 import java.util.LinkedList;
 
-// SparseMatrix должен быть реализован с помощью LinkedList
-// возможно, вам потребуется создать какие-то еще дополнительные классы,
-// которые должны быть вложенными / внутренними
-
 public class SparseMatrix extends Matrix {
   private LinkedList<SparseMatrixRow> rows;
 
@@ -54,8 +50,8 @@ public class SparseMatrix extends Matrix {
     return (SparseMatrix) super.add(matrix);
   }
 
-  public SparseMatrix multiply(SparseMatrix matrix) {
-    return (SparseMatrix) super.multiply(matrix);
+  public SparseMatrix product(SparseMatrix matrix) {
+    return (SparseMatrix) super.product(matrix);
   }
 
   public Matrix createMatrix(int rows, int columns) {

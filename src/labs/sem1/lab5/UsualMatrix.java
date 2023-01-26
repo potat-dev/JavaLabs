@@ -20,8 +20,8 @@ public class UsualMatrix extends Matrix {
     return (UsualMatrix) super.add(matrix);
   }
 
-  public UsualMatrix multiply(UsualMatrix matrix) {
-    return (UsualMatrix) super.multiply(matrix);
+  public UsualMatrix product(UsualMatrix matrix) {
+    return (UsualMatrix) super.product(matrix);
   }
 
   public Matrix createMatrix(int rows, int columns) {

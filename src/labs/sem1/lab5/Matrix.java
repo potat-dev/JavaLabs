@@ -44,7 +44,7 @@ public abstract class Matrix implements IMatrix {
     return result;
   }
 
-  public Matrix multiply(Matrix matrix) {
+  public Matrix product(Matrix matrix) {
     if (getColumns() != matrix.getRows()) {
       throw new IllegalArgumentException("Matrix sizes are not equal");
     }

@@ -2,13 +2,8 @@ package labs.sem1.lab5;
 
 public class Main {
   public static void main(String[] args) {
-    // Напишите программу, создающую 2 случайные матрицы размером 1000x1000 с 1000
-    // ненулевых элементов в каждой двумя способами - с помощью обычных и
-    // разреженных матриц. Проверьте, что сложение и умножение для разных видов
-    // матриц дает одинаковые результаты
-
-    final int matrixSize = 200;
-    final int elementsCount = 200;
+    final int matrixSize = 300;
+    final int elementsCount = 300;
 
     SquareMatrix[] squareMatrices = new SquareMatrix[4];
     SparseMatrix[] sparseMatrices = new SparseMatrix[4];
@@ -43,11 +38,11 @@ public class Main {
 
     // умножение
     System.out.print("multiplying square matrices... ");
-    squareMatrices[3] = squareMatrices[0].multiply(squareMatrices[1]);
+    squareMatrices[3] = squareMatrices[0].product(squareMatrices[1]);
     System.out.println("done");
 
     System.out.print("multiplying sparse matrices... ");
-    sparseMatrices[3] = sparseMatrices[0].multiply(sparseMatrices[1]);
+    sparseMatrices[3] = sparseMatrices[0].product(sparseMatrices[1]);
     System.out.println("done");
 
     // проверка на равенство

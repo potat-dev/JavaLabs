@@ -9,8 +9,8 @@ public class SquareMatrix extends UsualMatrix {
     return (SquareMatrix) super.add(matrix);
   }
 
-  public SquareMatrix multiply(SquareMatrix matrix) {
-    return (SquareMatrix) super.multiply(matrix);
+  public SquareMatrix product(SquareMatrix matrix) {
+    return (SquareMatrix) super.product(matrix);
   }
 
   public Matrix createMatrix(int rows, int columns) {
