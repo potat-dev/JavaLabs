@@ -1,21 +1,5 @@
 package labs.sem1.lab7;
 
-// Реализуйте класс для хранения настроек Settings,
-// в котором хранятся пары (имя параметра, значение).
-// Имя параметра задается строкой, а значение - целым числом.
-// Реализация должна использовать класс HashMap.
-// В классе Settings должны быть определены:
-
-// equals()
-// toString()
-// put(String, int)
-// int get(String)
-// delete(String)
-// loadFromBinaryFile(String filename)
-// saveToBinaryFile(String filename)
-// loadFromTextFile(String filename)
-// saveToTextFile(String filename)
-
 import java.util.HashMap;
 import java.io.*;
 
