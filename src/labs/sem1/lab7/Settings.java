@@ -1,0 +1,82 @@
+package labs.sem1.lab7;
+
+// Реализуйте класс для хранения настроек Settings,
+// в котором хранятся пары (имя параметра, значение).
+// Имя параметра задается строкой, а значение - целым числом.
+// Реализация должна использовать класс HashMap.
+// В классе Settings должны быть определены:
+
+// equals()
+// toString()
+// put(String, int)
+// int get(String)
+// delete(String)
+// loadFromBinaryFile(String filename)
+// saveToBinaryFile(String filename)
+// loadFromTextFile(String filename)
+// saveToTextFile(String filename)
+
+import java.util.HashMap;
+import java.io.*;
+
+public class Settings implements Serializable {
+  // используем HashMap для хранения настроек
+  private HashMap<String, Integer> settings;
+
+  public Settings() {
+    settings = new HashMap<String, Integer>();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+
+    if (obj == null || obj.getClass() != this.getClass()) {
+      return false;
+    }
+
+    Settings settings = (Settings) obj;
+    return settings.settings.equals(this.settings);
+  }
+
+  @Override
+  public String toString() {
+    return settings.toString();
+  }
+
+  public void put(String name, int value) {
+    settings.put(name, value);
+  }
+
+  public int get(String name) {
+    return settings.get(name);
+  }
+
+  public void delete(String name) {
+    settings.remove(name);
+  }
+
+  public void saveToBinaryFile(String filename) throws IOException {
+    try {
+      ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
+      out.writeObject(this);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      throw new IOException("Error while saving to binary file: " + e.getMessage());
+    }
+  }
+
+  public void loadFromBinaryFile(String filename) throws IOException {
+    try {
+      ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+      Settings settings = (Settings) in.readObject();
+      in.close();
+      this.settings = settings.settings;
+    } catch (Exception e) {
+      throw new IOException("Error while loading from binary file: " + e.getMessage());
+    }
+  }
+}
