@@ -43,7 +43,7 @@ public class Settings implements Serializable {
 
   @Override
   public String toString() {
-    return settings.toString();
+    return "Settings " + settings.toString();
   }
 
   public void put(String name, int value) {
@@ -77,6 +77,33 @@ public class Settings implements Serializable {
       this.settings = settings.settings;
     } catch (Exception e) {
       throw new IOException("Error while loading from binary file: " + e.getMessage());
+    }
+  }
+
+  public void saveToTextFile(String filename) throws IOException {
+    try {
+      PrintWriter out = new PrintWriter(new FileWriter(filename));
+      out.println(this);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      throw new IOException("Error while saving to text file: " + e.getMessage());
+    }
+  }
+
+  public void loadFromTextFile(String filename) throws IOException {
+    try {
+      BufferedReader in = new BufferedReader(new FileReader(filename));
+      String line = in.readLine();
+      in.close();
+      this.settings = new HashMap<String, Integer>();
+      String[] pairs = line.substring(10, line.length() - 1).split(", ");
+      for (String pair : pairs) {
+        String[] keyValue = pair.split("=");
+        this.settings.put(keyValue[0], Integer.parseInt(keyValue[1]));
+      }
+    } catch (Exception e) {
+      throw new IOException("Error while loading from text file: " + e.getMessage());
     }
   }
 }
