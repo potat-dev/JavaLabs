@@ -28,26 +28,30 @@ public class Main {
       }
     }
 
-    // square matrices operations
-    System.out.print("adding... ");
+    // сложение
+    System.out.print("adding square matrices... ");
     squareMatrices[2] = squareMatrices[0].add(squareMatrices[1]);
     System.out.println("done");
-    System.out.print("multiplying... ");
+
+    System.out.print("adding sparse matrices... ");
+    sparseMatrices[2] = sparseMatrices[0].add(sparseMatrices[1]);
+    System.out.println("done");
+
+    // проверка на равенство
+    System.out.print("square matrix sum equals sparse matrix sum: ");
+    System.out.println(squareMatrices[2].equals((Matrix) sparseMatrices[2]));
+
+    // умножение
+    System.out.print("multiplying square matrices... ");
     squareMatrices[3] = squareMatrices[0].multiply(squareMatrices[1]);
     System.out.println("done");
 
-    // sparse matrices operations
-    System.out.print("adding... ");
-    sparseMatrices[2] = sparseMatrices[0].add(sparseMatrices[1]);
-    System.out.println("done");
-    System.out.print("multiplying... ");
+    System.out.print("multiplying sparse matrices... ");
     sparseMatrices[3] = sparseMatrices[0].multiply(sparseMatrices[1]);
     System.out.println("done");
 
     // проверка на равенство
-    for (int i = 0; i < 4; i++) {
-      System.out.print("square matrix " + i + " equals sparse matrix " + i + ": ");
-      System.out.println(squareMatrices[i].equals((Matrix) sparseMatrices[i]));
-    }
+    System.out.print("square matrix product equals sparse matrix product: ");
+    System.out.println(squareMatrices[3].equals((Matrix) sparseMatrices[3]));
   }
 }

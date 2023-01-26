@@ -20,6 +20,8 @@ public abstract class Matrix implements IMatrix {
     return columns;
   }
 
+  // методы, которые должны быть реализованы в наследниках
+
   public abstract double getElement(int row, int column);
 
   public abstract void setElement(int row, int column, double value);
@@ -34,10 +36,6 @@ public abstract class Matrix implements IMatrix {
     Matrix result = createMatrix(getRows(), getColumns());
 
     for (int i = 0; i < getRows(); i++) {
-      if (i % 10 == 0) {
-        System.out.println("row " + i);
-      }
-
       for (int j = 0; j < getColumns(); j++) {
         result.setElement(i, j, getElement(i, j) + matrix.getElement(i, j));
       }
@@ -54,10 +52,6 @@ public abstract class Matrix implements IMatrix {
     Matrix result = createMatrix(getRows(), matrix.getColumns());
 
     for (int i = 0; i < getRows(); i++) {
-      if (i % 10 == 0) {
-        System.out.println("row " + i);
-      }
-
       for (int j = 0; j < matrix.getColumns(); j++) {
         double sum = 0;
 
@@ -93,9 +87,11 @@ public abstract class Matrix implements IMatrix {
       return false;
     }
 
-    // if (getClass() != obj.getClass()) {
-    // return false;
-    // }
+    // не нужно проверять, это объекты одного класса,
+    // нужно проверять, что объекты - наследники одного класса Matrix
+    if (!(obj instanceof Matrix)) {
+      return false;
+    }
 
     Matrix matrix = (Matrix) obj;
 

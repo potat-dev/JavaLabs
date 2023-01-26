@@ -6,40 +6,12 @@ import java.util.LinkedList;
 // возможно, вам потребуется создать какие-то еще дополнительные классы,
 // которые должны быть вложенными / внутренними
 
-class SparseMatrixElement {
-  private int row;
-  private int column;
-  private double value;
-
-  public SparseMatrixElement(int row, int column, double value) {
-    this.row = row;
-    this.column = column;
-    this.value = value;
-  }
-
-  public int getRow() {
-    return row;
-  }
-
-  public int getColumn() {
-    return column;
-  }
-
-  public double getValue() {
-    return value;
-  }
-
-  public void setValue(double value) {
-    this.value = value;
-  }
-}
-
 public class SparseMatrix extends Matrix {
-  private LinkedList<SparseMatrixElement> elements;
+  private LinkedList<SparseMatrixRow> rows;
 
   public SparseMatrix(int rows, int columns) {
     super(rows, columns);
-    elements = new LinkedList<SparseMatrixElement>();
+    this.rows = new LinkedList<SparseMatrixRow>();
   }
 
   public SparseMatrix(int size) {
@@ -47,24 +19,35 @@ public class SparseMatrix extends Matrix {
   }
 
   public double getElement(int row, int column) {
-    for (SparseMatrixElement element : elements) {
-      if (element.getRow() == row && element.getColumn() == column) {
-        return element.getValue();
+    for (SparseMatrixRow currentRow : rows) {
+      if (currentRow.getRow() == row) {
+        for (SparseMatrixElement element : currentRow.getElements()) {
+          if (element.getColumn() == column) {
+            return element.getValue();
+          }
+        }
+        return 0;
       }
     }
-
     return 0;
   }
 
   public void setElement(int row, int column, double value) {
-    for (SparseMatrixElement element : elements) {
-      if (element.getRow() == row && element.getColumn() == column) {
-        element.setValue(value);
+    for (SparseMatrixRow currentRow : rows) {
+      if (currentRow.getRow() == row) {
+        for (SparseMatrixElement element : currentRow.getElements()) {
+          if (element.getColumn() == column) {
+            element.setValue(value);
+            return;
+          }
+        }
+        currentRow.addElement(new SparseMatrixElement(column, value));
         return;
       }
     }
-
-    elements.add(new SparseMatrixElement(row, column, value));
+    SparseMatrixRow newRow = new SparseMatrixRow(row);
+    newRow.addElement(new SparseMatrixElement(column, value));
+    rows.add(newRow);
   }
 
   public SparseMatrix add(SparseMatrix matrix) {
@@ -77,5 +60,49 @@ public class SparseMatrix extends Matrix {
 
   public Matrix createMatrix(int rows, int columns) {
     return new SparseMatrix(rows, columns);
+  }
+}
+
+class SparseMatrixRow {
+  private int row;
+  private LinkedList<SparseMatrixElement> elements;
+
+  public SparseMatrixRow(int row) {
+    this.row = row;
+    elements = new LinkedList<SparseMatrixElement>();
+  }
+
+  public int getRow() {
+    return row;
+  }
+
+  public LinkedList<SparseMatrixElement> getElements() {
+    return elements;
+  }
+
+  public void addElement(SparseMatrixElement element) {
+    elements.add(element);
+  }
+}
+
+class SparseMatrixElement {
+  private int column;
+  private double value;
+
+  public SparseMatrixElement(int column, double value) {
+    this.column = column;
+    this.value = value;
+  }
+
+  public int getColumn() {
+    return column;
+  }
+
+  public double getValue() {
+    return value;
+  }
+
+  public void setValue(double value) {
+    this.value = value;
   }
 }
