@@ -14,15 +14,20 @@ public class Main {
     matrices[1].randomize();
 
     // measure time of execution of matrix multiplication
-    MeasureTime.measureTime(() -> {
+    MeasureTime.measureTime("Standard multiplication", () -> {
       matrices[2] = matrices[0].product(matrices[1]);
-    });
+    }, 10);
 
-    ParallelMatrixProduct pmp = new ParallelMatrixProduct(12);
+    // create parallel matrix multiplication object
+    // with number of threads equal to number of available processors
+    ParallelMatrixProduct pmp = new ParallelMatrixProduct();
 
     // measure time of execution of parallel matrix multiplication
-    MeasureTime.measureTime(() -> {
+    MeasureTime.measureTime("Parallel multiplication", () -> {
       matrices[3] = pmp.product(matrices[0], matrices[1]);
-    });
+    }, 10);
+
+    // check if matrices are equal
+    System.out.println("Matrices are equal: " + matrices[2].equals(matrices[3]));
   }
 }

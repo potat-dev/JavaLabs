@@ -2,7 +2,11 @@ package test.threads;
 
 public class Main {
   public static void main(String[] args) {
-    Thread[] threads = new Thread[10];
+    // get number of available processors
+    int processors = Runtime.getRuntime().availableProcessors();
+    System.out.println("Number of processors: " + processors);
+
+    Thread[] threads = new Thread[processors];
     for (int i = 0; i < threads.length; i++) {
       MyRunnable runnable = new MyRunnable("Thread " + i, 10 + i, 1000);
       threads[i] = new Thread(runnable);
@@ -32,6 +36,7 @@ class MyRunnable implements Runnable {
     this.name = name;
     this.iters = iters;
     this.delay = delay;
+
     // set name of thread
     Thread.currentThread().setName(name);
     System.out.println("Hello from constructor " + name);

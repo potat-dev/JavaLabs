@@ -9,6 +9,12 @@ public class ParallelMatrixProduct {
     threads = new Thread[threadsCount];
   }
 
+  public ParallelMatrixProduct() {
+    // get number of available processors
+    int threadsCount = Runtime.getRuntime().availableProcessors();
+    threads = new Thread[threadsCount];
+  }
+
   // method for parallel matrix multiplication
   public UsualMatrix product(UsualMatrix m1, UsualMatrix m2) {
     if (m1.getColumns() != m2.getRows()) {
@@ -22,8 +28,6 @@ public class ParallelMatrixProduct {
       int startRow = i * m1.getRows() / threads.length;
       int endRow = (i + 1) * m1.getRows() / threads.length;
       threads[i] = new Thread(new MatrixProductJob(i, m1, m2, result, startRow, endRow));
-      // System.out.println("Thread " + i + " will process rows " + startRow +
-      // " to " + (endRow - 1) + " (" + (endRow - startRow) + " rows)");
       threads[i].start();
     }
 
@@ -31,8 +35,6 @@ public class ParallelMatrixProduct {
     for (int i = 0; i < threads.length; i++) {
       try {
         threads[i].join();
-        // percentage of threads finished
-        // System.out.println((int) ((i + 1) * 100.0 / threads.length) + "% completed");
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -55,14 +57,6 @@ class MatrixProductJob implements Runnable {
     this.result = result;
     this.startRow = startRow;
     this.endRow = endRow;
-
-    // System.out.println(
-    // String.format(
-    // "Thread %s will process rows %s to %s (%s rows)",
-    // id,
-    // startRow,
-    // (endRow - 1),
-    // (endRow - startRow)));
   }
 
   public void run() {
