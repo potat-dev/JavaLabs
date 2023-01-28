@@ -3,6 +3,11 @@ package labs.sem1.lab5;
 public class UsualMatrix extends Matrix {
   private double[][] matrix;
 
+  public UsualMatrix(int size) {
+    super(size, size);
+    matrix = new double[size][size];
+  }
+
   public UsualMatrix(int rows, int columns) {
     super(rows, columns);
     matrix = new double[rows][columns];

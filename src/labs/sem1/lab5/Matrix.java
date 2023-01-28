@@ -28,6 +28,23 @@ public abstract class Matrix implements IMatrix {
 
   // методы, которые не зависят от реализации
 
+  public void randomize() {
+    for (int i = 0; i < getRows(); i++) {
+      for (int j = 0; j < getColumns(); j++) {
+        setElement(i, j, Math.random() * 1000);
+      }
+    }
+  }
+
+  public void randomize(int items) {
+    for (int i = 0; i < items; i++) {
+      int row = (int) (Math.random() * getRows());
+      int column = (int) (Math.random() * getColumns());
+      double value = Math.random() * 1000;
+      setElement(row, column, value);
+    }
+  }
+
   public Matrix add(Matrix matrix) {
     if (getRows() != matrix.getRows() || getColumns() != matrix.getColumns()) {
       throw new IllegalArgumentException("Matrix sizes are not equal");
