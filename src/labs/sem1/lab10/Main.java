@@ -5,6 +5,7 @@ public class Main {
     // classes to benchmark
     Class<?>[] classes = {
         Stack.class,
+        DebugStack.class,
         SynchroStack.class,
         SynchroStackFast.class
     };
@@ -59,12 +60,20 @@ public class Main {
         for (int j = 0; j < threadsPerMethod; j++) {
           int index = i * threadsPerMethod + j;
           threads[index] = new Thread(methods[i]);
-          threads[index].setName("Thread-" + index);
+          threads[index].setName("Thread " + index);
         }
       }
 
+      Logger log = null;
+      // set logger if stack is subclass of DebugStack and not DebugStack itself
+      // because DebugStack is not synchronized (and therefore not thread-safe)
+      if (stack instanceof DebugStack && !stack.getClass().getSimpleName().equals("DebugStack")) {
+        log = new Logger(threads.length);
+        ((DebugStack) stack).setLogger(log);
+      }
+
       // print stack type
-      System.out.print(String.format("Benchmarking: %s ", stack.getClass().getSimpleName()));
+      System.out.print("Benchmarking: " + stack.getClass().getSimpleName() + " ");
 
       // start measuring time
       long start = System.currentTimeMillis();
@@ -86,6 +95,11 @@ public class Main {
       // stop measuring time
       long end = System.currentTimeMillis();
       System.out.println("- took " + (end - start) + " ms");
+
+      // write to file
+      if (log != null) {
+        log.writeFile("results/" + stack.getClass().getSimpleName() + ".csv");
+      }
     }
   }
 }

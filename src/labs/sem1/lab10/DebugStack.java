@@ -2,43 +2,49 @@ package labs.sem1.lab10;
 
 public class DebugStack extends Stack {
   protected boolean debug = false;
+  Logger logger;
 
-  public void setDebug(boolean debug) {
-    this.debug = debug;
+  public void setLogger(Object logger) {
+    if (logger instanceof Logger) {
+      this.logger = (Logger) logger;
+      debug = true;
+    } else {
+      debug = false;
+    }
   }
 
   public void push(int i) {
     if (debug)
-      Utils.printRow("Push START");
+      logger.printRow("Push START");
     super.push(i);
     if (debug)
-      Utils.printRow("Push END");
+      logger.printRow("Push END");
   }
 
-  public int pop() throws RuntimeException {
+  public int pop() {
     if (debug)
-      Utils.printRow("Pop START");
+      logger.printRow("Pop START");
     int i = super.pop();
     if (debug)
-      Utils.printRow("Pop END");
+      logger.printRow("Pop END");
     return i;
   }
 
   public boolean equals(Object o) {
     if (debug)
-      Utils.printRow("Equals START");
+      logger.printRow("Equals START");
     boolean b = super.equals(o);
     if (debug)
-      Utils.printRow("Equals END");
+      logger.printRow("Equals END");
     return b;
   }
 
   public String toString() {
     if (debug)
-      Utils.printRow("toString START");
+      logger.printRow("toString START");
     String s = super.toString();
     if (debug)
-      Utils.printRow("toString END");
+      logger.printRow("toString END");
     return s;
   }
 }
