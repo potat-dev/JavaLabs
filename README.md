@@ -12,12 +12,11 @@ My formatted Lab tasks: [TASKS.md](TASKS.md)
 1. Clone this repository
    ```bash
    git clone https://github.com/cypotat/Java-Labs.git
-   cd Java-Labs
+   cd Java-Labs/src
    ```
 2. Compile the specific lab
 
    ```bash
-   cd src
    javac labs/sem1/lab1/*.java
    ```
 
