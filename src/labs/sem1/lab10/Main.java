@@ -2,21 +2,25 @@ package labs.sem1.lab10;
 
 public class Main {
   public static void main(String[] args) {
-    Class<?>[] classes = { // classes to benchmark
+    // classes to benchmark
+    Class<?>[] classes = {
         Stack.class,
         SynchroStack.class,
         SynchroStackFast.class
     };
 
-    int threadsPerMethod = 2; // threads per method
+    int threadsPerMethod = 24; // threads per method
+    int itersPerMethod = 1000; // iterations per method
+
+    // initial size of stacks (to avoid empty stack errors)
+    int initialSize = itersPerMethod * threadsPerMethod;
 
     // create stacks of each class
     Stack[] stacks = new Stack[classes.length];
     for (int i = 0; i < classes.length; i++) {
       try {
         stacks[i] = (Stack) classes[i].getConstructor().newInstance();
-        // fill stacks with 200 elements
-        for (int j = 0; j < 200; j++) {
+        for (int j = 0; j < initialSize; j++) {
           stacks[i].push(j);
         }
       } catch (Exception e) {
@@ -28,29 +32,27 @@ public class Main {
     for (Stack stack : stacks) {
       Runnable[] methods = {
           () -> { // push (write operation)
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < itersPerMethod; i++) {
               stack.push(i);
             }
           },
           () -> { // pop (write operation)
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < itersPerMethod; i++) {
               stack.pop();
             }
           },
-          () -> { // equals (read operation)
-            for (int i = 0; i < 10000; i++) {
+          () -> { // equals (read operation, light)
+            for (int i = 0; i < itersPerMethod * 20; i++) {
               stack.equals(stack);
             }
           },
-          () -> { // toString (read operation)
-            for (int i = 0; i < 100; i++) {
+          () -> { // toString (read operation, heavy)
+            for (int i = 0; i < itersPerMethod / 5; i++) {
               stack.toString();
             }
           }
       };
 
-      
-      
       // create threads
       Thread[] threads = new Thread[methods.length * threadsPerMethod];
       for (int i = 0; i < methods.length; i++) {
@@ -60,16 +62,19 @@ public class Main {
           threads[index].setName("Thread-" + index);
         }
       }
-      
-      System.out.print("Benchmarking " + stack.getClass().getSimpleName());
 
-      // start threads and measure time
+      // print stack type
+      System.out.print(String.format("Benchmarking: %s ", stack.getClass().getSimpleName()));
+
+      // start measuring time
       long start = System.currentTimeMillis();
 
+      // start threads
       for (Thread thread : threads) {
         thread.start();
       }
 
+      // wait for threads to finish
       for (Thread thread : threads) {
         try {
           thread.join();
@@ -78,9 +83,9 @@ public class Main {
         }
       }
 
+      // stop measuring time
       long end = System.currentTimeMillis();
-
-      System.out.println(" - took " + (end - start) + "ms");
+      System.out.println("- took " + (end - start) + " ms");
     }
   }
 }
