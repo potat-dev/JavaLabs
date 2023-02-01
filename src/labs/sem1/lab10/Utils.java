@@ -1,7 +1,7 @@
 package labs.sem1.lab10;
 
 public class Utils {
-  private static int threadsCount = 4;
+  private static int threadsCount = 8;
 
   public static void initCSV() {
     // generate string with headers (e.g. "main,Thread-0,Thread-1,...")

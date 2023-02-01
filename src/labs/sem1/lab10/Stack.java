@@ -4,7 +4,7 @@ package labs.sem1.lab10;
 
 public class Stack {
   protected StackNode head;
-  protected int size;
+  protected int size = 0;
 
   public void push(int i) {
     StackNode node = new StackNode(i);
@@ -13,7 +13,7 @@ public class Stack {
     size++;
   }
 
-  public int pop() throws RuntimeException {
+  public int pop() {
     if (head == null) {
       throw new RuntimeException("Stack is empty");
     }
