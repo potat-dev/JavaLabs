@@ -1,11 +1,11 @@
 package labs.sem1.lab10;
 
-public class SynchroStackFast extends DebugStack {
-  // с этим классом одновременно может работать один записывающий поток
-  // (push и pop) и несколько читающих (equals и toString)
+// с этим классом одновременно может работать один записывающий поток
+// (push и pop) и несколько читающих (equals и toString)
+// для этого есть два объекта-монитора: для записи и для чтения
 
-  // для этого есть два объекта-монитора: для записи и для чтения
-  // при записи блокируется монитор для записи, при чтении - монитор для чтения
+public class SynchroStackFast extends DebugStack {
+  // change this to extends DebugStack / Stack to enable / disable debug
 
   Object readLock = new Object();
   Object writeLock = new Object();

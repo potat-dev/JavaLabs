@@ -10,8 +10,11 @@ public class Main {
         SynchroStackFast.class
     };
 
-    int threadsPerMethod = 24; // threads per method
-    int itersPerMethod = 1000; // iterations per method
+    int threadsPerMethod = 2; // threads per method
+    int itersPerMethod = 5; // iterations per method
+
+    // logs file path
+    String logsPath = "src/labs/sem1/lab10/results/%s.csv";
 
     // initial size of stacks (to avoid empty stack errors)
     int initialSize = itersPerMethod * threadsPerMethod;
@@ -43,12 +46,12 @@ public class Main {
             }
           },
           () -> { // equals (read operation, light)
-            for (int i = 0; i < itersPerMethod * 20; i++) {
+            for (int i = 0; i < itersPerMethod; i++) {
               stack.equals(stack);
             }
           },
           () -> { // toString (read operation, heavy)
-            for (int i = 0; i < itersPerMethod / 5; i++) {
+            for (int i = 0; i < itersPerMethod; i++) {
               stack.toString();
             }
           }
@@ -67,7 +70,7 @@ public class Main {
       Logger log = null;
       // set logger if stack is subclass of DebugStack and not DebugStack itself
       // because DebugStack is not synchronized (and therefore not thread-safe)
-      if (stack instanceof DebugStack && !stack.getClass().getSimpleName().equals("DebugStack")) {
+      if (stack instanceof DebugStack) {
         log = new Logger(threads.length);
         ((DebugStack) stack).setLogger(log);
       }
@@ -98,7 +101,7 @@ public class Main {
 
       // write to file
       if (log != null) {
-        log.writeFile("results/" + stack.getClass().getSimpleName() + ".csv");
+        log.writeFile(String.format(logsPath, stack.getClass().getSimpleName()));
       }
     }
   }

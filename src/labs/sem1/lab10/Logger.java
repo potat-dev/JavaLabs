@@ -24,7 +24,7 @@ public class Logger {
     }
   }
 
-  public void printRow(String s) {
+  public void print(String s) {
     // print s at the column of the current thread (other columns should be empty)
     // get current thread id from "Thread 0" -> 1 (main -> 0)
     String threadName = Thread.currentThread().getName();

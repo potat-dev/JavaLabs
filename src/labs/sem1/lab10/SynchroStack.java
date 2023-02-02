@@ -1,6 +1,9 @@
 package labs.sem1.lab10;
 
+// с этим классом одновременно может работать один поток (для всех методов)
+
 public class SynchroStack extends DebugStack {
+  // change this to extends DebugStack / Stack to enable / disable debug
 
   public synchronized void push(int i) {
     super.push(i);

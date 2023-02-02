@@ -15,36 +15,52 @@ public class DebugStack extends Stack {
 
   public void push(int i) {
     if (debug)
-      logger.printRow("Push START");
+      synchronized (logger) {
+        logger.print("Push START");
+      }
     super.push(i);
     if (debug)
-      logger.printRow("Push END");
+      synchronized (logger) {
+        logger.print("Push END");
+      }
   }
 
   public int pop() {
     if (debug)
-      logger.printRow("Pop START");
+      synchronized (logger) {
+        logger.print("Pop START");
+      }
     int i = super.pop();
     if (debug)
-      logger.printRow("Pop END");
+      synchronized (logger) {
+        logger.print("Pop END");
+      }
     return i;
   }
 
   public boolean equals(Object o) {
     if (debug)
-      logger.printRow("Equals START");
+      synchronized (logger) {
+        logger.print("Equals START");
+      }
     boolean b = super.equals(o);
     if (debug)
-      logger.printRow("Equals END");
+      synchronized (logger) {
+        logger.print("Equals END");
+      }
     return b;
   }
 
   public String toString() {
     if (debug)
-      logger.printRow("toString START");
+      synchronized (logger) {
+        logger.print("toString START");
+      }
     String s = super.toString();
     if (debug)
-      logger.printRow("toString END");
+      synchronized (logger) {
+        logger.print("toString END");
+      }
     return s;
   }
 }
