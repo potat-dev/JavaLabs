@@ -4,7 +4,7 @@ package labs.sem1.lab10;
 // (push и pop) и несколько читающих (equals и toString)
 // для этого есть два объекта-монитора: для записи и для чтения
 
-public class SynchroStackFast extends DebugStack {
+public class SynchroStackFast extends Stack {
   // change this to extends DebugStack / Stack to enable / disable debug
 
   Object readLock = new Object();

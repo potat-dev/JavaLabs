@@ -10,8 +10,8 @@ public class Main {
         SynchroStackFast.class
     };
 
-    int threadsPerMethod = 2; // threads per method
-    int itersPerMethod = 5; // iterations per method
+    int threadsPerMethod = 24; // threads per method
+    int itersPerMethod = 1000; // iterations per method
 
     // logs file path
     String logsPath = "src/labs/sem1/lab10/results/%s.csv";
@@ -46,12 +46,12 @@ public class Main {
             }
           },
           () -> { // equals (read operation, light)
-            for (int i = 0; i < itersPerMethod; i++) {
+            for (int i = 0; i < itersPerMethod * 20; i++) {
               stack.equals(stack);
             }
           },
           () -> { // toString (read operation, heavy)
-            for (int i = 0; i < itersPerMethod; i++) {
+            for (int i = 0; i < itersPerMethod / 5; i++) {
               stack.toString();
             }
           }
@@ -106,3 +106,10 @@ public class Main {
     }
   }
 }
+
+// example output:
+
+// Benchmarking: Stack - took 669 ms
+// Benchmarking: DebugStack - took 3725 ms
+// Benchmarking: SynchroStack - took 3845 ms
+// Benchmarking: SynchroStackFast - took 2180 ms
