@@ -2,33 +2,50 @@ package labs.sem1.lab1;
 
 public class Main {
   public static void main(String[] args) {
-    // Create two Int objects
-    Int a = new Int(5);
-    System.out.println("a = " + a);
+    test1();
+  }
 
-    Int b = new Int(10);
-    System.out.println("b = " + b);
-    System.out.println();
-
-    // Test the methods
+  public static void test1() {
+    Int a = new Int();
     a.increment();
-    System.out.println("a++");
-    System.out.println("a = " + a);
-    System.out.println();
 
-    b.decrement();
-    System.out.println("b--");
-    System.out.println("b = " + b);
-    System.out.println();
+    for (int i = 0; i < 7; i++) {
+      a.add(a);
+      System.out.println(a);
+    }
 
-    a.add(b);
-    System.out.println("a = a + b");
-    System.out.println("a = " + a);
-    System.out.println();
+    for (int i = 0; i < 3; i++) {
+      a.decrement();
+    }
 
-    b.subtract(a);
-    System.out.println("b = b - a");
-    System.out.println("b = " + b);
-    System.out.println();
+    System.out.println(a);
+
+    for (int i = 0; i < 3; i++) {
+      a.add(a);
+      System.out.println(a);
+    }
+  }
+
+  public static void test2() {
+    Int a = new Int();
+    a.increment();
+
+    for (int i = 0; i < 10; i++) {
+      a.add(a);
+      System.out.println(a);
+    }
+
+    Int b = new Int();
+
+    for (int i = 0; i < 3; i++) {
+      b.increment();
+    }
+
+    for (int i = 0; i < 3; i++) {
+      b.add(b);
+    }
+
+    a.subtract(b);
+    System.out.println(a);
   }
 }

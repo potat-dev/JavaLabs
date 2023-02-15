@@ -7,10 +7,6 @@ public class Int {
     this.value = 0;
   }
 
-  public Int(int value) {
-    this.value = value;
-  }
-
   public String toString() {
     return String.valueOf(this.value);
   }
