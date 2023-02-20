@@ -3,8 +3,8 @@ package labs.sem1.lab2;
 import java.util.Arrays;
 
 public class Matrix {
-  private int size;
-  private int[][] matrix;
+  protected int size;
+  protected int[][] matrix;
 
   public Matrix() {
     this.size = 0;
