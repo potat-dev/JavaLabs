@@ -5,7 +5,7 @@ import java.util.ListIterator;
 
 class SortedIntegerList {
   // список, в котором хранятся элементы
-  private LinkedList<Integer> list;
+  protected LinkedList<Integer> list;
   boolean allowDuplicates;
 
   public SortedIntegerList(boolean allowDuplicates) {
