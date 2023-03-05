@@ -4,12 +4,24 @@ class SquareMatrix extends Matrix {
   public SquareMatrix(int size) {
     super(size, size);
     for (int i = 0; i < size; i++) {
-      this.matrix[i][i] = 1;
+      matrix[i][i] = 1;
     }
   }
 
   public SquareMatrix() {
     this(1);
+  }
+
+  public SquareMatrix(int size, int fill) {
+    super(size, size);
+    if (fill == 0) {
+      return;
+    }
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
+        matrix[i][j] = fill;
+      }
+    }
   }
 
   public SquareMatrix sum(SquareMatrix matrix) {
@@ -25,7 +37,7 @@ class SquareMatrix extends Matrix {
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        result.matrix[i][j] = this.matrix[i][j] + matrix.matrix[i][j];
+        result.setElement(i, j, this.getElement(i, j) + matrix.getElement(i, j));
       }
     }
 

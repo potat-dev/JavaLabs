@@ -21,14 +21,14 @@ class Matrix {
 
   public Matrix sum(Matrix matrix) {
     if (this.rows != matrix.rows || this.columns != matrix.columns) {
-      throw new MatrixException("Matrices have different sizes");
+      throw new MatrixSumException("Matrices have different sizes");
     }
 
     Matrix result = new Matrix(this.rows, this.columns);
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        result.matrix[i][j] = this.matrix[i][j] + matrix.matrix[i][j];
+        result.setElement(i, j, this.getElement(i, j) + matrix.getElement(i, j));
       }
     }
 
@@ -37,7 +37,7 @@ class Matrix {
 
   public Matrix product(Matrix matrix) {
     if (this.columns != matrix.rows) {
-      throw new MatrixException("Matrices have different sizes");
+      throw new MatrixProductException("Matrices have different sizes");
     }
 
     Matrix result = new Matrix(this.rows, matrix.columns);
@@ -45,7 +45,7 @@ class Matrix {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < matrix.columns; j++) {
         for (int k = 0; k < this.columns; k++) {
-          result.matrix[i][j] += this.matrix[i][k] * matrix.matrix[k][j];
+          result.setElement(i, j, result.getElement(i, j) + this.getElement(i, k) * matrix.getElement(k, j));
         }
       }
     }
@@ -75,7 +75,7 @@ class Matrix {
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        result.append(this.matrix[i][j]).append(" ");
+        result.append(this.getElement(i, j)).append(" ");
       }
       result.append("\n");
     }
@@ -101,7 +101,7 @@ class Matrix {
 
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < this.columns; j++) {
-        if (this.matrix[i][j] != matrix.matrix[i][j]) {
+        if (getElement(i, j) != matrix.getElement(i, j)) {
           return false;
         }
       }
