@@ -1,53 +1,49 @@
 package labs.sem1.lab6.task1;
 
-public class FormattedInput {
-  public static void main(String[] args) {
-    Object vals[] = scanf("%d %s %c");
-    for (Object val : vals) {
-      System.out.print(val.getClass().getName());
-      System.out.print(": ");
-      System.out.println(val);
-    }
-  }
+import java.util.List;
 
-  public static Object[] sscanf(String format, String in) {
+public class FormattedInput {
+  // supported formats: digit, float, string, character
+  static List<String> availableTokens = List.of("%d", "%f", "%s", "%c");
+
+  public static Object[] sscanf(String format, String input) {
     // tokenize input and format
-    String[] input = in.split(" ");
-    String[] tokens = format.split(" ");
+    String[] inputTokens = input.split(" ");
+    String[] formatTokens = format.split(" ");
 
     // check if input and format have same length
-    if (tokens.length != input.length) {
+    if (formatTokens.length != inputTokens.length) {
       throw new RuntimeException("Input does not match format");
     }
 
     // check if format is valid
-    for (String token : tokens) {
-      if (!token.equals("%d") && !token.equals("%f") && !token.equals("%s") && !token.equals("%c")) {
+    for (String token : formatTokens) {
+      if (!availableTokens.contains(token)) {
         throw new IllegalArgumentException("Invalid format");
       }
     }
 
     // create array to store values
-    Object[] values = new Object[tokens.length];
+    Object[] values = new Object[formatTokens.length];
 
     // parse input with try-catch
-    for (int i = 0; i < tokens.length; i++) {
+    for (int i = 0; i < formatTokens.length; i++) {
       try {
-        switch (tokens[i]) {
+        switch (formatTokens[i]) {
           case "%d":
-            values[i] = Integer.parseInt(input[i]);
+            values[i] = Integer.parseInt(inputTokens[i]);
             break;
           case "%f":
-            values[i] = Double.parseDouble(input[i]);
+            values[i] = Double.parseDouble(inputTokens[i]);
             break;
           case "%s":
-            values[i] = input[i];
+            values[i] = inputTokens[i];
             break;
           case "%c":
-            if (input[i].length() != 1) {
+            if (inputTokens[i].length() != 1) {
               throw new RuntimeException("Input does not match format");
             } else {
-              values[i] = input[i].charAt(0);
+              values[i] = inputTokens[i].charAt(0);
             }
             break;
         }
