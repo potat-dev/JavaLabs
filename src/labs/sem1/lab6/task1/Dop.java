@@ -13,12 +13,12 @@ public class Dop {
     System.out.println("Output:");
 
     Object vals[] = ExtFormattedInput.sscanf(format, in);
+
     for (Object val : vals) {
       System.out.print(val.getClass().getName());
       System.out.print(": ");
       System.out.println(val);
     }
-
   }
 }
 

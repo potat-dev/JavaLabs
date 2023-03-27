@@ -1,6 +1,7 @@
 package labs.sem1.lab5;
 
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.ArrayList;
 
 // доп: написать реализацию SparseMatrix на основе ArrayList<LinkedList<Element>>
@@ -14,10 +15,13 @@ public class Dop {
     SparseMatrix sparseMatrix = new SparseMatrix(matrixSize);
     SparseMatrixFast sparseMatrixFast = new SparseMatrixFast(matrixSize);
 
+    System.out.println("With matrix size " + matrixSize + " and " + elementsCount + " elements:");
+    System.out.println();
+
     for (int i = 0; i < elementsCount; i++) {
       int row = (int) (Math.random() * matrixSize);
       int column = (int) (Math.random() * matrixSize);
-      int value = (int) (Math.random() * 9);
+      int value = (int) (Math.random() * 1000);
       sparseMatrix.setElement(row, column, value);
       sparseMatrixFast.setElement(row, column, value);
     }
@@ -33,7 +37,9 @@ public class Dop {
 
     System.out.println("SparseMatrix time: " + delta1);
     System.out.println("SparseMatrixFast time: " + delta2);
-    System.out.println("SparseMatrixFast is " + (double) delta1 / delta2 + " times faster");
+
+    String times = String.format(Locale.US, "%.3f", (double) delta1 / delta2);
+    System.out.println("SparseMatrixFast is " + times + " times faster");
   }
 }
 
