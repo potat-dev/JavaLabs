@@ -22,7 +22,7 @@ public class Main {
     System.out.print("settings.get(\"answer\") = ");
     System.out.println(settings.get("answer"));
 
-    String basePath = "D:/Projects/Java-Labs/src/labs/sem1/lab7/";
+    String basePath = "src/labs/sem1/lab7/";
 
     try {
       // save to binary file and load to new object
