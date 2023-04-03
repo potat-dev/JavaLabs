@@ -51,7 +51,8 @@ class MatrixProductJob implements Runnable {
   int startRow;
   int endRow;
 
-  public MatrixProductJob(int id, UsualMatrix m1, UsualMatrix m2, UsualMatrix result, int startRow, int endRow) {
+  public MatrixProductJob(
+      int id, UsualMatrix m1, UsualMatrix m2, UsualMatrix result, int startRow, int endRow) {
     this.m1 = m1;
     this.m2 = m2;
     this.result = result;
