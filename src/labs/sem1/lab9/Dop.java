@@ -9,11 +9,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-// [Reader-Writer] Реализовать программу, которая подсчитывает статистику употребления слов в
-// заданных текстовых файлах. Программа получает список текстовых файлов в качестве параметров
-// командной строки. Каждый файл должен обрабатываться в отдельном потоке.. Для подсчета числа
-// уникальных слов используется общий для всех потоков HashMaр (ключ - слово, значение количество
-// употреблений).
+// Реализовать программу, которая подсчитывает статистику употребления слов в заданных текстовых
+// файлах. Программа получает список текстовых файлов в качестве параметров командной строки. Каждый
+// файл должен обрабатываться в отдельном потоке. Для подсчета числа уникальных слов используется
+// общий для всех потоков HashMaр (ключ - слово, значение - количество употреблений)
 
 public class Dop {
   public static void main(String[] args) {
@@ -40,14 +39,23 @@ public class Dop {
       System.out.println("Error while waiting for threads");
     }
 
-    // counter.printWords(100, 50, true);
-    counter.printWords(1000, 0, false);
+    // get top 25 words
+    counter.descending().limit(25).print();
+
+    // get all words with count > 100
+    // counter.ascending().largerThan(100).print();
   }
 }
 
 class WordCounter {
   private HashMap<String, Integer> map = new HashMap<>();
 
+  // settings for pretty print
+  private int limit = 0;
+  private int largerThan = 100;
+  private boolean reverse = true;
+
+  // add word to HashMap
   public synchronized void add(String word) {
     if (map.containsKey(word)) {
       map.put(word, map.get(word) + 1);
@@ -56,37 +64,49 @@ class WordCounter {
     }
   }
 
-  // get words HashMap with value >= n
-  public Stream<Entry<String, Integer>> getWords(int largerThan, int limit, boolean reverse) {
-    HashMap<String, Integer> result = new HashMap<>();
-
-    for (Map.Entry<String, Integer> entry : map.entrySet()) {
-      if (entry.getValue() >= largerThan) {
-        result.put(entry.getKey(), entry.getValue());
-      }
-    }
-
-    Stream<Entry<String, Integer>> stream = result.entrySet().stream();
-    stream = stream.sorted(reverse ? Collections.reverseOrder(Map.Entry.comparingByValue())
-                                   : Map.Entry.comparingByValue());
-    if (limit > 0) {
-      stream = stream.limit(limit);
-    }
-
-    return stream;
+  public WordCounter largerThan(int n) {
+    largerThan = n;
+    return this;
   }
 
-  public void printWords(int largerThan, int limit, boolean reverse) {
-    Stream<Entry<String, Integer>> result = getWords(largerThan, limit, reverse);
+  public WordCounter limit(int n) {
+    limit = n;
+    return this;
+  }
 
+  // по возрастанию
+  public WordCounter ascending() {
+    reverse = false;
+    return this;
+  }
+
+  // по убыванию
+  public WordCounter descending() {
+    reverse = true;
+    return this;
+  }
+
+  public void print() {
     if (map.size() == 0) {
       System.out.println("No words found");
       return;
     }
 
     StringBuilder builder = new StringBuilder();
+    Stream<Entry<String, Integer>> result = map.entrySet().stream();
+
+    // filter map to get only words with value >= largerThan
+    result = result.filter(entry -> entry.getValue() >= largerThan);
+
+    // sort by value
+    result = result.sorted(reverse ? Collections.reverseOrder(Map.Entry.comparingByValue())
+                                   : Map.Entry.comparingByValue());
+
+    if (limit > 0)
+      result = result.limit(limit);
+
     result.forEach(
-        entry -> { builder.append(String.format("(%d) %s\n", entry.getValue(), entry.getKey())); });
+        entry -> builder.append(String.format("(%d) %s\n", entry.getValue(), entry.getKey())));
 
     System.out.println(builder.toString());
   }
@@ -105,6 +125,19 @@ class FileProcessor extends Thread {
     }
   }
 
+  private String[] cleanUp(String[] words) {
+    for (int i = 0; i < words.length; i++) {
+      // remove all except letters, dashes and apostrophes
+      // remove dashes from start and end of word
+      // remove leading and trailing spaces
+      words[i] = words[i].toLowerCase().replaceAll("[^a-zа-яё'-]", "");
+      words[i] = words[i].replaceAll("^-|-$", "").trim();
+    }
+    // remove empty strings
+    words = Stream.of(words).filter(word -> !word.isEmpty()).toArray(String[] ::new);
+    return words;
+  }
+
   @Override
   public void run() {
     // read file and count words
@@ -113,7 +146,7 @@ class FileProcessor extends Thread {
     try {
       while ((line = reader.readLine()) != null) {
         String[] words = line.split(" ");
-        for (String word : words) {
+        for (String word : cleanUp(words)) {
           counter.add(word);
         }
       }
