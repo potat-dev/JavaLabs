@@ -41,9 +41,15 @@ public class Dop {
 
     // get top 25 words
     counter.descending().limit(25).print();
+    System.out.println();
 
-    // get all words with count > 100
-    // counter.ascending().largerThan(100).print();
+    // get top 50 words with count > 100
+    counter.descending().largerThan(100).limit(50).print();
+    System.out.println();
+
+    // get all words with count > 100 (accending)
+    counter.ascending().largerThan(100).print();
+    System.out.println();
   }
 }
 
@@ -52,7 +58,7 @@ class WordCounter {
 
   // settings for pretty print
   private int limit = 0;
-  private int largerThan = 100;
+  private int largerThan = 0;
   private boolean reverse = true;
 
   // add word to HashMap
@@ -93,6 +99,12 @@ class WordCounter {
     }
 
     StringBuilder builder = new StringBuilder();
+    if (limit > 0 || largerThan > 0) {
+      builder.append(String.format(""));
+    } else {
+      builder.append("All words");
+    }
+
     Stream<Entry<String, Integer>> result = map.entrySet().stream();
 
     // filter map to get only words with value >= largerThan
@@ -108,20 +120,22 @@ class WordCounter {
     result.forEach(
         entry -> builder.append(String.format("(%d) %s\n", entry.getValue(), entry.getKey())));
 
+    // String info = "Words
+
     System.out.println(builder.toString());
   }
 }
 
 class FileProcessor extends Thread {
-  private WordCounter counter;
-  private FileReader file;
+  private WordCounter counter; // ссылка на общий счетчик
+  private BufferedReader reader;
 
   public FileProcessor(String fileName, WordCounter counter) {
     this.counter = counter;
     try {
-      this.file = new FileReader(new File(fileName));
+      this.reader = new BufferedReader(new FileReader(new File(fileName)));
     } catch (Exception e) {
-      System.out.println("File " + fileName + " not found");
+      System.out.println("Error while opening file " + fileName);
     }
   }
 
@@ -140,9 +154,9 @@ class FileProcessor extends Thread {
 
   @Override
   public void run() {
-    // read file and count words
-    BufferedReader reader = new BufferedReader(file);
+    // read file line by line
     String line;
+
     try {
       while ((line = reader.readLine()) != null) {
         String[] words = line.split(" ");
@@ -153,5 +167,7 @@ class FileProcessor extends Thread {
     } catch (Exception e) {
       System.out.println("Error while reading file");
     }
+
+    // System.out.println("Thread " + this.getId() + " finished");
   }
 }
