@@ -1,5 +1,6 @@
 package labs.sem1.lab3;
 
+// Доп:
 // Создать класс FourPartMatrix, расширяющий класс SquareMatrix.
 // Вторая четвертинка равна первой, четвертая - третьей.
 // Добавить MatrixSumException, MatrixProductException

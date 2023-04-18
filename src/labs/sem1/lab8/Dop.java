@@ -1,11 +1,12 @@
 package labs.sem1.lab8;
 
-import labs.sem1.lab5.UsualMatrix;
-
+// Доп:
 // Реализуйте многопоточную версию умножения вектора на матрицу.
 // Функция умножения в качестве параметра получает число потоков.
 // Подберите этот параметр так, что на длине вектора 1000,
 // многопоточная версия выиграла у однопоточной
+
+import labs.sem1.lab5.UsualMatrix;
 
 public class Dop {
   public static void main(String[] args) {
@@ -38,9 +39,10 @@ public class Dop {
       ParallelVectorMatrixProduct pvmp = new ParallelVectorMatrixProduct(t);
 
       // measure time of execution of parallel matrix multiplication
-      MeasureTime.measureTime("Parallel multiplication", () -> {
-        results[t] = pvmp.product(a, b);
-      }, iters);
+      MeasureTime.measureTime(
+          "Parallel multiplication", () -> {
+            results[t] = pvmp.product(a, b);
+          }, iters);
     }
 
     // check if matrices are equal

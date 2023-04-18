@@ -4,7 +4,7 @@ import labs.sem1.lab5.UsualMatrix;
 
 // класс для умножения вектора на матрицу.
 // в нем, в отличие от класса ParallelMatrixProduct,
-// параллелизация происходит не по строкам матрицы, а по столбцам
+// распараллеливание происходит не по строкам матрицы, а по столбцам
 // вектор представляется в виде матрицы, у которой одна строка
 
 class ParallelVectorMatrixProduct {
@@ -33,8 +33,7 @@ class ParallelVectorMatrixProduct {
     for (int i = 0; i < threads.length; i++) {
       int startColumn = i * m2.getColumns() / threads.length;
       int endColumn = (i + 1) * m2.getColumns() / threads.length;
-      threads[i] =
-          new Thread(new VectorMatrixProductJob(i, m1, m2, result, startColumn, endColumn));
+      threads[i] = new Thread(new VectorMatrixProductJob(i, m1, m2, result, startColumn, endColumn));
       threads[i].start();
     }
 
@@ -80,5 +79,7 @@ class VectorMatrixProductJob implements Runnable {
   }
 }
 
-// TODO: можно создать класс MatrixProduct, который будет автоматически выбирать какой метод
-// распараллеливания использовать: по строкам или по столбцам, в зависимости от размера матрицы
+// TODO:
+// можно создать класс MatrixProduct, который будет автоматически выбирать
+// какой метод распараллеливания использовать: по строкам или по столбцам, в
+// зависимости от размера матрицы

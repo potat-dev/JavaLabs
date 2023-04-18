@@ -1,5 +1,7 @@
 package labs.sem1.lab9;
 
+// Написать программу, приводящую к ситуации взаимной блокировки (deadlock)
+
 public class Deadlock {
   private static Object lock1 = new Object();
   private static Object lock2 = new Object();

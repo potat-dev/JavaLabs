@@ -1,8 +1,9 @@
 package labs.sem1.lab2;
 
-// доп. добавить в класс метод rotate(int dir)
-// dir - направление вращения
-// 1 - 90 градусов, 2 - 180 градусов, 3 - 270 градусов
+// Доп:
+// Добавить в класс метод rotate (int dir)
+// dir - направление вращения:
+// (1 - 90 градусов, 2 - 180 градусов, 3 - 270 градусов)
 
 class MatrixDop extends Matrix {
   public MatrixDop(int size) {

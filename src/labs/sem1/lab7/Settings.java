@@ -1,7 +1,7 @@
 package labs.sem1.lab7;
 
-import java.util.HashMap;
 import java.io.*;
+import java.util.HashMap;
 
 public class Settings implements Serializable {
   // используем HashMap для хранения настроек

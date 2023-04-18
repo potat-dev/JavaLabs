@@ -1,5 +1,11 @@
 package labs.sem1.lab9;
 
+// Доп:
+// Реализовать программу, которая подсчитывает статистику употребления слов в заданных текстовых
+// файлах. Программа получает список текстовых файлов в качестве параметров командной строки. Каждый
+// файл должен обрабатываться в отдельном потоке. Для подсчета числа уникальных слов используется
+// общий для всех потоков HashMaр (ключ - слово, значение - количество употреблений)
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,11 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
-
-// Реализовать программу, которая подсчитывает статистику употребления слов в заданных текстовых
-// файлах. Программа получает список текстовых файлов в качестве параметров командной строки. Каждый
-// файл должен обрабатываться в отдельном потоке. Для подсчета числа уникальных слов используется
-// общий для всех потоков HashMaр (ключ - слово, значение - количество употреблений)
 
 public class Dop {
   public static void main(String[] args) {
@@ -112,7 +113,7 @@ class WordCounter {
 
     // sort by value
     result = result.sorted(reverse ? Collections.reverseOrder(Map.Entry.comparingByValue())
-                                   : Map.Entry.comparingByValue());
+        : Map.Entry.comparingByValue());
 
     if (limit > 0)
       result = result.limit(limit);
@@ -148,7 +149,7 @@ class FileProcessor extends Thread {
       words[i] = words[i].replaceAll("^-|-$", "").trim();
     }
     // remove empty strings
-    words = Stream.of(words).filter(word -> !word.isEmpty()).toArray(String[] ::new);
+    words = Stream.of(words).filter(word -> !word.isEmpty()).toArray(String[]::new);
     return words;
   }
 

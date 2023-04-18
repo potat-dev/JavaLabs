@@ -1,6 +1,7 @@
 package labs.sem1.lab4;
 
-// добавить метод SortedList getLessThan(int value)
+// Доп:
+// Добавить метод SortedList getLessThan(int value),
 // возвращающий список элементов, меньших value
 
 public class Dop {

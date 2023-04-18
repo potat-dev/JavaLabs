@@ -45,7 +45,8 @@ class Matrix {
     for (int i = 0; i < this.rows; i++) {
       for (int j = 0; j < matrix.columns; j++) {
         for (int k = 0; k < this.columns; k++) {
-          result.setElement(i, j, result.getElement(i, j) + this.getElement(i, k) * matrix.getElement(k, j));
+          result.setElement(
+              i, j, result.getElement(i, j) + this.getElement(i, k) * matrix.getElement(k, j));
         }
       }
     }

@@ -1,7 +1,12 @@
 package labs.sem1.lab6.task1;
 
-import java.util.List;
+// Доп:
+// Создать новый спецификатор, %a, который будет позволять вводить массивы
+// Введенный массив может быть любой длины
+// Окончание массива - конец строки или 'не число'
+
 import java.util.Iterator;
+import java.util.List;
 
 public class Dop {
   public static void main(String[] args) {

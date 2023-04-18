@@ -1,14 +1,21 @@
 package labs.sem1.lab10;
 
+// Написать класс стек на основе связного списка (классом LinkedList пользоваться нельзя) с методами:
+// - модифицирующими: void push(int), int pop()
+// - читающими: equals(), toString()
+
+// Написать две реализации:
+// - SynchroStack - со стеком одновременно работать может только один поток
+// - SynchroStackFast - со стеком одновременно может работать либо один модифицирующий поток, либо несколько читающих потоков
+
+// Класс должен быть пригоден к использованию в многопоточных программах
+// В main с помощью замеров времени показать преимущество SynchroStackFast при работе в многопоточной программе.
+
 public class Main {
   public static void main(String[] args) {
     // classes to benchmark
     Class<?>[] classes = {
-        Stack.class,
-        DebugStack.class,
-        SynchroStack.class,
-        SynchroStackFast.class
-    };
+        Stack.class, DebugStack.class, SynchroStack.class, SynchroStackFast.class };
 
     int threadsPerMethod = 24; // threads per method
     int itersPerMethod = 1000; // iterations per method

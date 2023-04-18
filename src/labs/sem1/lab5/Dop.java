@@ -1,11 +1,12 @@
 package labs.sem1.lab5;
 
+// Доп:
+// Написать реализацию SparseMatrix на основе ArrayList<LinkedList<Element>>
+// и сравнить время работы с реализацией на основе LinkedList<LinkedList<Element>>
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
-import java.util.ArrayList;
-
-// доп: написать реализацию SparseMatrix на основе ArrayList<LinkedList<Element>>
-// и сравнить время работы с реализацией на основе LinkedList<LinkedList<Element>>
 
 public class Dop {
   public static void main(String[] args) {

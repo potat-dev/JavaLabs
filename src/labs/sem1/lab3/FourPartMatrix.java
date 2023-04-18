@@ -1,9 +1,5 @@
 package labs.sem1.lab3;
 
-// Создать класс FourPartMatrix, расширяющий класс SquareMatrix
-// Вторая четвертинка равна первой, четвертая - третьей
-// Добавить MatrixSumException, MatrixProductException
-
 public class FourPartMatrix extends SquareMatrix {
   protected int[][] second;
 

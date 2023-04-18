@@ -1,9 +1,6 @@
 package labs.sem1.lab10;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
-
+// Доп:
 // Реализовать класс iterativeParallelism, который будет обрабатывать списки в несколько потоков
 // должны быть реализованы следующие методы:
 
@@ -16,10 +13,14 @@ import java.util.function.Predicate;
 // можете рассчитывать, что число потоков не велико. Не следует рассчитывать на то, что переданные
 // компараторы, предикаты и функции работают быстро.
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
+
 public class Dop {
   public static void main(String[] args) {
     List<Integer> list = List.of(1, 2, 3, 4, -5, 6, 7, 8, -9, 10, 100);
-    
+
     System.out.println(iterativeParallelism.minimum(3, list));
     System.out.println(iterativeParallelism.maximum(3, list));
 

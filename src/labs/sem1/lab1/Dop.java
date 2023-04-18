@@ -1,7 +1,8 @@
 package labs.sem1.lab1;
 
-// доп: создать класс Circle для работы с фигурой круг
-// два метода: bool isInside(int x, y) и zoom(int amount)
+// Доп:
+// Создать класс Circle для работы с фигурой круг
+// Мтоды: bool isInside(int x, y) и zoom(int amount)
 
 public class Dop {
   public static void main(String[] args) {
