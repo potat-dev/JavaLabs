@@ -1,11 +1,10 @@
+
 import java.io.*;
 import java.net.*;
 
 public class Client {
     private static boolean connected = false;
     private static String chatMateName = "Server";
-
-    private static String currentDir = System.getProperty("user.dir");
 
     public static void main(String args[]) throws Exception {
         if (args.length != 2) {
@@ -93,6 +92,7 @@ public class Client {
         // Создаем поток для приема сообщений от сервера
         Thread receiveThread = new Thread(() -> {
             byte[] receiveData = new byte[1024];
+
             while (true) {
                 try {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -102,46 +102,51 @@ public class Client {
 
                     if (receivedMessage.startsWith("<NAME>")) {
                         chatMateName = receivedMessage.substring(5);
-                    } else if (receivedMessage.startsWith("<CMD>")) {
-                        String commandOutput = receivedMessage.substring(5);
-                        System.out.println("Command output: " + commandOutput);
                     }
 
-                    else if (receivedMessage.startsWith("<CMD>")) {
-                        String command = receivedMessage.substring(5);
-                        System.out.println("Command output: " + command);
-
-                        String result = "";
-                        if (command.equals("LS")) {
-                            File dir = new File(currentDir);
-                            File[] files = dir.listFiles();
-
-                            StringBuilder sb = new StringBuilder();
-
-                            if (files != null) {
-                                for (File file : files) {
-                                    sb.append(file.getName()).append("\n");
-                                }
-                            }
-
-                            result = sb.toString();
-                        }
-
-                        else if (command.equals("PWD")) {
-                            result = currentDir;
-                        }
-
-                        else if (command.startsWith("CD ")) {
-                            String directory = command.substring(3);
-                            currentDir = directory;
-                            result = directory;
-                        }
-
-                        String message = "<MSG>" + result;
+                    else if (receivedMessage.equals("<PWD>")) {
+                        String pwd = System.getProperty("user.dir");
+                        System.out.println(chatMateName + " requested your PWD: " + pwd);
+                        String message = "<>" + pwd;
                         byte[] sendData = message.getBytes();
                         DatagramPacket sendPacket = new DatagramPacket(
                                 sendData, sendData.length, serverAddressInet, serverPort);
                         clientSocket.send(sendPacket);
+                    }
+
+                    else if (receivedMessage.equals("@ls")) {
+                        System.out.println(chatMateName + " requested your ls");
+
+                        File currentDir = new File(System.getProperty("user.dir"));
+                        File[] files = currentDir.listFiles();
+
+                        StringBuilder sb = new StringBuilder();
+
+                        if (files != null) {
+                            for (File file : files) {
+                                sb.append(file.getName()).append("\n");
+                            }
+                        }
+
+                        String result = sb.toString();
+
+                        String message = "<LS>" + result;
+                        byte[] sendData = message.getBytes();
+                        DatagramPacket sendPacket = new DatagramPacket(
+                                sendData, sendData.length, serverAddressInet, serverPort);
+                        clientSocket.send(sendPacket);
+                    }
+
+                    else if (receivedMessage.startsWith("@cd ")) {
+                        String pwd = System.getProperty("user.dir");
+                        String message = "<PWD>" + pwd;
+                        byte[] sendData = message.getBytes();
+                        DatagramPacket sendPacket = new DatagramPacket(
+                                sendData, sendData.length, serverAddressInet, serverPort);
+                        clientSocket.send(sendPacket);
+                    } else if (receivedMessage.startsWith("<CMD>")) {
+                        String commandOutput = receivedMessage.substring(5);
+                        System.out.println("Command output: " + commandOutput);
                     }
 
                     else if (receivedMessage.startsWith("<MSG>")) {
@@ -150,9 +155,12 @@ public class Client {
                             System.out.println("Received: " + userMessage);
                         else
                             System.out.println(chatMateName + ": " + userMessage);
-                    } else {
-                        System.out.println("Poshel nahue!");
                     }
+
+                    else {
+                        System.out.println("Received unsupported packet");
+                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
