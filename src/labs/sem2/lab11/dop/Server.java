@@ -1,4 +1,5 @@
 package dop;
+
 import java.io.*;
 import java.net.*;
 
@@ -18,18 +19,41 @@ public class Server {
         int port = Integer.parseInt(args[0]);
         InetAddress tempAdr = InetAddress.getByName("localhost");
         DatagramSocket serverSocket = new DatagramSocket(port, tempAdr);
-        byte[] receiveData = new byte[1024];
-
         System.out.println("Server is running on port: " + port);
 
         // Создаем поток для приема сообщений от клиента
-        Thread receiveThread = new Thread(() -> {
+        Thread receiveThread = new ReceiveThread(serverSocket);
+        receiveThread.start();
+
+        // Создаем поток для отправки сообщений клиенту
+        Thread sendThread = new SendThread(serverSocket);
+        sendThread.start();
+    }
+
+    private static void sendPacket(DatagramSocket sock, InetAddress addr, int port, String msg) throws IOException {
+        byte[] sendData = msg.getBytes();
+        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, addr, port);
+        sock.send(sendPacket);
+    }
+
+    private static class ReceiveThread extends Thread {
+        private DatagramSocket serverSocket;
+        private byte[] receiveData;
+
+        public ReceiveThread(DatagramSocket serverSocket) {
+            this.serverSocket = serverSocket;
+            this.receiveData = new byte[1024];
+        }
+
+        @Override
+        public void run() {
             while (true) {
                 try {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                     serverSocket.receive(receivePacket);
 
-                    String receivedMessage = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                    String receivedMessage = new String(receivePacket.getData(), 0,
+                            receivePacket.getLength());
                     if (receivedMessage.startsWith("<HELLO>")) {
                         clientPort = receivePacket.getPort();
                         clientAddress = receivePacket.getAddress();
@@ -69,19 +93,13 @@ public class Server {
                             result = directory;
                         }
 
-                        String message = "<MSG>" + result;
-                        byte[] sendData = message.getBytes();
-                        DatagramPacket sendPacket = new DatagramPacket(
-                                sendData, sendData.length, clientAddress, clientPort);
-                        serverSocket.send(sendPacket);
+                        String answer = "<MSG>" + result;
+                        sendPacket(serverSocket, clientAddress, clientPort, answer);
                     }
 
                     else if (receivedMessage.startsWith("<MSG>")) {
                         String userMessage = receivedMessage.substring(5);
-                        if (chatMateName.isEmpty())
-                            System.out.println("Received: " + userMessage);
-                        else
-                            System.out.println(chatMateName + ": " + userMessage);
+                        System.out.println(chatMateName + ": " + userMessage);
                     }
 
                     else {
@@ -90,14 +108,22 @@ public class Server {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    serverSocket.close();
                 }
             }
-        });
+        }
+    }
 
-        receiveThread.start();
+    private static class SendThread extends Thread {
+        private DatagramSocket serverSocket;
 
-        // Создаем поток для отправки сообщений клиенту
-        Thread sendThread = new Thread(() -> {
+        public SendThread(DatagramSocket serverSocket) {
+            this.serverSocket = serverSocket;
+        }
+
+        @Override
+        public void run() {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -111,50 +137,38 @@ public class Server {
                     }
 
                     else if (message.startsWith("@name ")) {
-                        // Установка имени пользователя
                         String username = message.substring(6);
-                        String tempMessage = "<NAME>" + username;
-                        byte[] sendData = tempMessage.getBytes();
-                        DatagramPacket sendPacket = new DatagramPacket(
-                                sendData, sendData.length, clientAddress, clientPort);
-                        serverSocket.send(sendPacket);
+                        String answer = "<NAME>" + username;
+                        sendPacket(serverSocket, clientAddress, clientPort, answer);
                     }
 
                     else if (message.equals("@pwd")) {
-                        String tempMessage = "<CMD>PWD";
-                        byte[] sendData = tempMessage.getBytes();
-                        DatagramPacket sendPacket = new DatagramPacket(
-                                sendData, sendData.length, clientAddress, clientPort);
-                        serverSocket.send(sendPacket);
-                    } else if (message.equals("@ls")) {
-                        String tempMessage = "<CMD>LS";
-                        byte[] sendData = tempMessage.getBytes();
-                        DatagramPacket sendPacket = new DatagramPacket(
-                                sendData, sendData.length, clientAddress, clientPort);
-                        serverSocket.send(sendPacket);
-                    } else if (message.startsWith("@cd ")) {
+                        String answer = "<CMD>PWD";
+                        sendPacket(serverSocket, clientAddress, clientPort, answer);
+                    }
+
+                    else if (message.equals("@ls")) {
+                        String answer = "<CMD>LS";
+                        sendPacket(serverSocket, clientAddress, clientPort, answer);
+                    }
+
+                    else if (message.startsWith("@cd ")) {
                         String directory = message.substring(4);
-                        String tempMessage = "<CMD>CD " + directory;
-                        byte[] sendData = tempMessage.getBytes();
-                        DatagramPacket sendPacket = new DatagramPacket(
-                                sendData, sendData.length, clientAddress, clientPort);
-                        serverSocket.send(sendPacket);
+                        String answer = "<CMD>CD " + directory;
+                        sendPacket(serverSocket, clientAddress, clientPort, answer);
                     }
 
                     else {
-                        message = "<MSG>" + message;
-                        byte[] sendData = message.getBytes();
-                        DatagramPacket sendPacket = new DatagramPacket(
-                                sendData, sendData.length, clientAddress, clientPort);
-                        serverSocket.send(sendPacket);
+                        String answer = "<MSG>" + message;
+                        sendPacket(serverSocket, clientAddress, clientPort, answer);
                     }
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                serverSocket.close();
             }
-        });
-
-        sendThread.start();
+        }
     }
 }

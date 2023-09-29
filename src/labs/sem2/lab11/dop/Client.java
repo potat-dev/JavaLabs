@@ -43,8 +43,6 @@ public class Client {
         sock.send(sendPacket);
     }
 
-    // rewrite threads into separate classes
-
     private static class SendThread extends Thread {
         private DatagramSocket clientSocket;
         private InetAddress serverAddressInet;
