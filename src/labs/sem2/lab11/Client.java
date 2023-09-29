@@ -1,6 +1,9 @@
+package labs.sem2.lab11;
 
 import java.io.*;
 import java.net.*;
+
+// Better optimized version is in /dop
 
 public class Client {
     private static boolean connected = false;
@@ -58,13 +61,17 @@ public class Client {
                         DatagramPacket sendPacket = new DatagramPacket(
                                 sendData, sendData.length, serverAddressInet, serverPort);
                         clientSocket.send(sendPacket);
-                    } else if (message.equals("@ls")) {
+                    }
+
+                    else if (message.equals("@ls")) {
                         String tempMessage = "<CMD>LS";
                         byte[] sendData = tempMessage.getBytes();
                         DatagramPacket sendPacket = new DatagramPacket(
                                 sendData, sendData.length, serverAddressInet, serverPort);
                         clientSocket.send(sendPacket);
-                    } else if (message.startsWith("@cd ")) {
+                    }
+
+                    else if (message.startsWith("@cd ")) {
                         String directory = message.substring(4);
                         String tempMessage = "<CMD>CD " + directory;
                         byte[] sendData = tempMessage.getBytes();
@@ -144,7 +151,9 @@ public class Client {
                         DatagramPacket sendPacket = new DatagramPacket(
                                 sendData, sendData.length, serverAddressInet, serverPort);
                         clientSocket.send(sendPacket);
-                    } else if (receivedMessage.startsWith("<CMD>")) {
+                    }
+
+                    else if (receivedMessage.startsWith("<CMD>")) {
                         String commandOutput = receivedMessage.substring(5);
                         System.out.println("Command output: " + commandOutput);
                     }

@@ -1,4 +1,4 @@
-package dop;
+package labs.sem2.lab11.dop;
 
 import java.io.*;
 import java.net.*;
@@ -131,12 +131,7 @@ public class Client {
                     String receivedMessage = new String(receivePacket.getData(), 0, receivePacket.getLength());
 
                     if (receivedMessage.startsWith("<NAME>")) {
-                        chatMateName = receivedMessage.substring(5);
-                    }
-
-                    else if (receivedMessage.startsWith("<CMD>")) {
-                        String commandOutput = receivedMessage.substring(5);
-                        System.out.println("Command output: " + commandOutput);
+                        chatMateName = receivedMessage.substring(6);
                     }
 
                     else if (receivedMessage.startsWith("<CMD>")) {
@@ -185,6 +180,8 @@ public class Client {
 
                 catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    clientSocket.close();
                 }
             }
         }

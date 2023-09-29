@@ -1,4 +1,4 @@
-package dop;
+package labs.sem2.lab11.dop;
 
 import java.io.*;
 import java.net.*;
@@ -7,6 +7,7 @@ public class Server {
     private static InetAddress clientAddress;
     private static int clientPort;
     private static String chatMateName = "Client";
+    public static DatagramSocket serverSocket;
 
     private static String currentDir = System.getProperty("user.dir");
 
@@ -18,7 +19,7 @@ public class Server {
 
         int port = Integer.parseInt(args[0]);
         InetAddress tempAdr = InetAddress.getByName("localhost");
-        DatagramSocket serverSocket = new DatagramSocket(port, tempAdr);
+        serverSocket = new DatagramSocket(port, tempAdr);
         System.out.println("Server is running on port: " + port);
 
         // Создаем поток для приема сообщений от клиента
@@ -38,29 +39,28 @@ public class Server {
 
     private static class ReceiveThread extends Thread {
         private DatagramSocket serverSocket;
-        private byte[] receiveData;
 
         public ReceiveThread(DatagramSocket serverSocket) {
             this.serverSocket = serverSocket;
-            this.receiveData = new byte[1024];
         }
 
         @Override
         public void run() {
-            while (true) {
-                try {
+            byte[] receiveData = new byte[1024];
+
+            try {
+                while (true) {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                     serverSocket.receive(receivePacket);
 
-                    String receivedMessage = new String(receivePacket.getData(), 0,
-                            receivePacket.getLength());
+                    String receivedMessage = new String(receivePacket.getData(), 0, receivePacket.getLength());
                     if (receivedMessage.startsWith("<HELLO>")) {
                         clientPort = receivePacket.getPort();
                         clientAddress = receivePacket.getAddress();
                     }
 
                     else if (receivedMessage.startsWith("<NAME>")) {
-                        chatMateName = receivedMessage.substring(5);
+                        chatMateName = receivedMessage.substring(6);
                     }
 
                     else if (receivedMessage.startsWith("<CMD>")) {
@@ -105,12 +105,12 @@ public class Server {
                     else {
                         System.out.println("Received unsupported packet");
                     }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    serverSocket.close();
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                serverSocket.close();
             }
         }
     }

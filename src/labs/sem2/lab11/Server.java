@@ -1,5 +1,9 @@
+package labs.sem2.lab11;
+
 import java.io.*;
 import java.net.*;
+
+// Better optimized version is in /dop
 
 public class Server {
     private static InetAddress clientAddress;
