@@ -1,4 +1,4 @@
-package labs.sem2.lab12;
+package labs.sem2.lab12.dop;
 
 import java.io.BufferedReader;
 import java.io.IOException;

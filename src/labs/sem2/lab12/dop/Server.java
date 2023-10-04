@@ -1,4 +1,4 @@
-package labs.sem2.lab12;
+package labs.sem2.lab12.dop;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,24 @@ import java.net.ServerSocket;
 import java.util.List;
 import java.util.ArrayList;
 
+// TODO: add @admin and @ban commands
+// @admin <password> - gives admin rights to the user
+// there can be only one admin at a time
+// @ban <username> - bans the user from the chat
+// banned users can't send messages to the chat
+// only admins can ban users
+
 public class Server {
     private static List<Connection> connections = new ArrayList<>();
+
+    // banned users
+    private static List<String> banned = new ArrayList<>();
+
+    // current admin
+    private static String admin = null;
+
+    // admin password
+    private static final String password = "xxXX1234";
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1) {
@@ -74,6 +90,39 @@ public class Server {
                         String username = message.substring(10);
                         String tempMessage = in.readLine();
                         sendToUser(username, name + " [private]: " + tempMessage);
+                    }
+
+                    else if (message.startsWith("@admin ")) {
+                        if (admin != null) {
+                            sendToUser(name, "Admin is already exist!");
+                            continue;
+                        }
+
+                        String tempPassword = message.substring(7);
+                        if (tempPassword.equals(password)) {
+                            admin = name;
+                            sendToAll(name + " is now admin!");
+                        }
+
+                        else {
+                            sendToUser(name, "Wrong password!");
+                        }
+                    }
+
+                    else if (message.startsWith("@ban ")) {
+                        String username = message.substring(5);
+                        if (admin == null) {
+                            sendToUser(name, "You are not admin!");
+                        } else if (admin.equals(name)) {
+                            banned.add(username);
+                            sendToAll(username + " was banned by " + name);
+                        } else {
+                            sendToUser(name, "You are not admin!");
+                        }
+                    }
+
+                    else if (banned.contains(name)) {
+                        sendToUser(name, "You are banned!");
                     }
 
                     else {
