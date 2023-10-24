@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 compile/
+out/
 
 # Log file
 *.log
@@ -25,3 +26,10 @@ hs_err_pid*
 
 # vscode files
 .vscode/
+
+# Gradle
+.gradle/
+gradlew*
+
+# IntelliJ
+.idea/
