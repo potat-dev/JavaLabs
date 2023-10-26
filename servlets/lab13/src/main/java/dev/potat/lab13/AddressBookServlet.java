@@ -1,34 +1,35 @@
 package dev.potat.lab13;
 
-import java.io.*;
-import java.util.List;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.List;
+
+
+@WebServlet(name = "addressBook", value = "/book")
 public class AddressBookServlet extends HttpServlet {
     private AddressBook addressBook;
 
-    @Override
     public void init() throws ServletException {
-        // Инициализация записной книжки и загрузка данных из файла
         addressBook = new AddressBook("contacts.json");
         loadAddressBookData();
     }
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Отобразить список контактов
         List<Contact> contacts = addressBook.getContacts();
         request.setAttribute("contacts", contacts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/addressbook.jsp");
         dispatcher.forward(request, response);
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Добавить нового контакта или телефон к существующему
         String name = request.getParameter("username");
         String phone = request.getParameter("phone");
 
@@ -42,7 +43,6 @@ public class AddressBookServlet extends HttpServlet {
                     newContact.addPhone(phone);
                     addressBook.addContact(newContact);
                 }
-                // Сохранить данные в файл
                 saveAddressBookData();
             }
         }
@@ -60,15 +60,10 @@ public class AddressBookServlet extends HttpServlet {
         return null;
     }
 
-    // Здесь нужно добавить методы для сохранения и загрузки данных из файла
 
     private void loadAddressBookData() {
-        // Загрузка данных из файла и инициализация записной книжки
-        // Синхронизировать доступ к файлу
     }
 
     private void saveAddressBookData() {
-        // Сохранение данных в файл
-        // Синхронизировать доступ к файлу
     }
 }

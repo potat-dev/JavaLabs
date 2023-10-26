@@ -1,3 +1,2 @@
 rootProject.name = 'JavaLabs'
 include 'servlets'
-

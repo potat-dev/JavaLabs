@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 compile/
+**/build/
 out/
 
 # Log file
@@ -28,8 +29,8 @@ hs_err_pid*
 .vscode/
 
 # Gradle
-.gradle/
-gradlew*
+.gradle
+!gradle-wrapper.jar
 
 # IntelliJ
 .idea/
