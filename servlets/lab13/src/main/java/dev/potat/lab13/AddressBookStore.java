@@ -1,6 +1,7 @@
 package dev.potat.lab13;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.ToString;
@@ -10,7 +11,10 @@ import java.io.IOException;
 
 @ToString
 public class AddressBookStore {
+    private static volatile AddressBookStore instance;
+
     private AddressBook addressBook = new AddressBook();
+
     @ToString.Exclude
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -25,6 +29,18 @@ public class AddressBookStore {
             throw new RuntimeException(e);
         }
     }
+
+    public static AddressBookStore getInstance(String databasePath) {
+        if (instance == null) {
+            synchronized (AddressBookStore.class) {
+                if (instance == null) {
+                    instance = new AddressBookStore(databasePath);
+                }
+            }
+        }
+        return instance;
+    }
+
 
     @Synchronized
     public void load() throws IOException {
