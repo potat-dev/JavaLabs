@@ -1,19 +1,20 @@
 package dev.potat.lab13;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@ToString
-@RequiredArgsConstructor
+@Data
+@NoArgsConstructor
 public class Contact {
-    private final String name;
-    private final List<String> phones = new ArrayList<>();
+    private String name;
+    private List<String> phones = new ArrayList<>();
+
+    public Contact(String name, String phone) {
+        setName(name);
+        addPhone(phone);
+    }
 
     public void addPhone(@NonNull String phone) {
         phones.add(phone);
