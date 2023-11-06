@@ -1,4 +1,4 @@
-package dev.potat.lab13;
+package dev.potat.servlets.lab13;
 
 import lombok.*;
 

@@ -1,10 +1,7 @@
-package dev.potat.lab13;
+package dev.potat.servlets.lab13;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Synchronized;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +41,7 @@ public class AddressBookStore {
 
     @Synchronized
     public void load() throws IOException {
+        if (database.length() == 0) return;
         addressBook = objectMapper.readValue(database, AddressBook.class);
     }
 

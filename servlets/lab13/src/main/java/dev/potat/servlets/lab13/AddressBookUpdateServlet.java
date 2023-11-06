@@ -1,4 +1,4 @@
-package dev.potat.lab13;
+package dev.potat.servlets.lab13;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
