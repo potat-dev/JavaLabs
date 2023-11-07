@@ -22,12 +22,25 @@ public class AddressBook {
         contacts.add(contact);
     }
 
-    public void update(@NonNull String name, @NonNull String phone) {
+    public UpdateStatus update(String name, String phone) {
+        if (!safetyCheck(name, phone)) return UpdateStatus.DECLINED;
         Contact contact = getContact(name);
         if (contact != null) {
             contact.addPhone(phone);
+            return UpdateStatus.UPDATED;
         } else {
             addContact(new Contact(name, phone));
+            return UpdateStatus.CREATED;
         }
+    }
+
+    private boolean safetyCheck(String name, String phone) {
+        return true;
+    }
+
+    public static enum UpdateStatus {
+        CREATED,
+        UPDATED,
+        DECLINED
     }
 }

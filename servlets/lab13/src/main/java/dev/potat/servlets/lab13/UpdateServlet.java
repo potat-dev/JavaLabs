@@ -1,5 +1,7 @@
 package dev.potat.servlets.lab13;
 
+import dev.potat.servlets.lab13.AddressBook.UpdateStatus;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,20 +21,38 @@ public class UpdateServlet extends HttpServlet {
         store.load();
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        getServletContext().getRequestDispatcher("/form.jsp").forward(request, response);
+    }
+
+    // Method to handle form POST request.
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
+        UpdateStatus result = store.update(name, phone);
 
-        store.update(name, phone);
-        response.setContentType("text/html");
+        String status, message;
+        switch (result) {
+            case CREATED:
+                status = "Successfully created!";
+                message = "Contact was successfully created";
+                break;
+            case UPDATED:
+                status = "Added new phone!";
+                message = "Contact was successfully updated";
+                break;
+            case DECLINED:
+                status = "Contact was declined";
+                message = "Contact was declined for some reason";
+                break;
+            default:
+                status = "Something goes wrong";
+                message = "And I don't know what is going on";
+        }
 
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + store.getAddressBook() + "</h1>");
-        out.println("<h2>" + store.getContact(name) + "</h2>");
-        out.println("</body></html>");
-
+        request.setAttribute("status", status);
+        request.setAttribute("message", message);
+        getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
         store.save();
     }
 

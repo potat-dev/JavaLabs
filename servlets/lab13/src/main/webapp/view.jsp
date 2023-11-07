@@ -2,16 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!doctype html>
-<html class="dark">
+<html>
 <head>
     <meta charset="UTF-8"/>
     <title>Address Book</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="bg-slate-900 text-slate-100">
 <div class="container mx-auto max-w-6xl p-4">
-
     <h1 class="text-3xl font-bold text-slate-100 text-center my-4">
         Your Address Book
     </h1>
@@ -30,12 +28,11 @@
     </div>
 
     <div class="grid grid-flow-col justify-stretch md:flex md:justify-center">
-        <a href="${pageContext.request.contextPath}/add_contact"
+        <a href="${pageContext.request.contextPath}/contacts/update"
            class="block rounded-md bg-blue-500 text-white font-bold text-center mt-4 py-2 px-4">
             Add New Contact
         </a>
     </div>
-
 </div>
 </body>
 </html>

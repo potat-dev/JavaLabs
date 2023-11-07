@@ -1,6 +1,7 @@
 package dev.potat.servlets.lab13;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.potat.servlets.lab13.AddressBook.UpdateStatus;
 import lombok.*;
 
 import java.io.File;
@@ -66,7 +67,7 @@ public class AddressBookStore {
     }
 
     @Synchronized
-    public void update(@NonNull String name, @NonNull String phone) {
-        addressBook.update(name, phone);
+    public UpdateStatus update(@NonNull String name, @NonNull String phone) {
+        return addressBook.update(name, phone);
     }
 }
