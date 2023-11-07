@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "UpdateAddressBook", value = "/contacts/update")
 public class UpdateServlet extends HttpServlet {
@@ -25,7 +24,7 @@ public class UpdateServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/form.jsp").forward(request, response);
     }
 
-    // Method to handle form POST request.
+    // Method to handle POST request from the form
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
