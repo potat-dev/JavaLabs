@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "UpdateAddressBook", value = "/contacts/update")
-public class AddressBookUpdateServlet extends HttpServlet {
+public class UpdateServlet extends HttpServlet {
     private AddressBookStore store;
 
     @SneakyThrows
