@@ -1,6 +1,7 @@
 package dev.potat.servlets.lab13;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,11 @@ public class Contact {
         addPhone(phone);
     }
 
-    public void addPhone(@NonNull String phone) {
+    public void addPhone(String phone) {
         phones.add(phone);
+    }
+
+    public void removePhone(String phone) {
+        phones.remove(phone);
     }
 }

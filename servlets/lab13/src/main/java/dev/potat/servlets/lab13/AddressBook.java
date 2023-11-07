@@ -1,6 +1,8 @@
 package dev.potat.servlets.lab13;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -38,12 +40,29 @@ public class AddressBook {
         }
     }
 
+    public UpdateStatus remove(String name, String phone) {
+        Contact contact = getContact(name);
+        if (contact == null) return UpdateStatus.NOT_EXIST;
+
+        if (phone.isBlank() || phone.isEmpty()) {
+            contacts.remove(contact);
+            return UpdateStatus.CONTACT_REMOVED;
+        } else {
+            if (contact.getPhones().contains(phone)) {
+                contact.removePhone(phone);
+                return UpdateStatus.PHONE_REMOVED;
+            } else {
+                return UpdateStatus.NOT_EXIST;
+            }
+        }
+    }
+
     private boolean safetyCheck(String name, String phone) {
         if (name.isBlank() || name.length() > 50 || phone.isBlank() || phone.length() > 16) return false;
-        return nameRegex.matcher(name).matches() && phoneRegex.matcher(phone).matches();
+        return true;
     }
 
     public enum UpdateStatus {
-        CREATED, UPDATED, DECLINED
+        CREATED, UPDATED, DECLINED, NOT_EXIST, CONTACT_REMOVED, PHONE_REMOVED
     }
 }

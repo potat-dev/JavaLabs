@@ -1,6 +1,5 @@
 package dev.potat.servlets.lab13;
 
-import dev.potat.servlets.lab13.AddressBook.UpdateStatus;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,8 +9,8 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 
-@WebServlet(name = "UpdateAddressBook", value = "/contacts/update")
-public class UpdateServlet extends HttpServlet {
+@WebServlet(name = "DeleteContact", value = "/contacts/delete")
+public class DeleteServlet extends HttpServlet {
     private AddressBookStore store;
 
     @SneakyThrows
@@ -21,28 +20,28 @@ public class UpdateServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        getServletContext().getRequestDispatcher("/form_update.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/form_delete.jsp").forward(request, response);
     }
 
     // Method to handle POST request from the form
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
-        UpdateStatus result = store.update(name, phone);
+        AddressBook.UpdateStatus result = store.remove(name, phone);
 
         String status, message;
         switch (result) {
-            case CREATED:
-                status = "Successfully created!";
-                message = "Contact was successfully created";
+            case PHONE_REMOVED:
+                status = "Phone removed!";
+                message = "Phone was successfully removed";
                 break;
-            case UPDATED:
-                status = "Added new phone!";
-                message = "Contact was successfully updated";
+            case CONTACT_REMOVED:
+                status = "Contact removed!";
+                message = "Contact was successfully removed";
                 break;
-            case DECLINED:
-                status = "Contact was declined";
-                message = "Contact was declined for some reason";
+            case NOT_EXIST:
+                status = "Contact does not exist";
+                message = "You have entered the wrong contact info";
                 break;
             default:
                 status = "Something goes wrong";

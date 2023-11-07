@@ -30,7 +30,14 @@
     <div class="grid grid-flow-col justify-stretch md:flex md:justify-center">
         <a href="${pageContext.request.contextPath}/contacts/update"
            class="block rounded-md bg-blue-500 text-white font-bold text-center mt-4 py-2 px-4">
-            Add New Contact
+            Add or update contact
+        </a>
+    </div>
+
+    <div class="grid grid-flow-col justify-stretch md:flex md:justify-center">
+        <a href="${pageContext.request.contextPath}/contacts/delete"
+           class="block rounded-md bg-red-500 text-white font-bold text-center mt-4 py-2 px-4">
+            Remove čontact or phone
         </a>
     </div>
 </div>
