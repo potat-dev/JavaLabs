@@ -30,15 +30,15 @@ public class LoginServlet extends HttpServlet {
         String status, message;
 
         if (userStore.check(new User(username, password))) {
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
+            HttpSession session = request.getSession(false);
+            if (session != null) session.setAttribute("username", username);
             // hehe
-            status = "Log in success!";
-            message = "u can go :)";
+            status = "Login success!";
+            message = "Now you can post your ads :)";
         } else {
             // not hehe
-            status = "Can not log in";
-            message = "lol ur not allowed :(";
+            status = "Login failed!";
+            message = "Incorrect username or password :(";
         }
 
         request.setAttribute("status", status);
