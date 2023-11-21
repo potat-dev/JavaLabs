@@ -11,11 +11,11 @@ import java.io.IOException;
 
 @WebServlet(name = "ViewAddressBook", value = "/contacts")
 public class ViewServlet extends HttpServlet {
-    private BulletinBoardStore store;
+    private AdBoardStore store;
 
     @SneakyThrows
     public void init() {
-        store = BulletinBoardStore.getInstance("db.json");
+        store = AdBoardStore.getInstance("db.json");
         store.load();
     }
 

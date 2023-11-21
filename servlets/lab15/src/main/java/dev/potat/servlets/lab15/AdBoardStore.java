@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @ToString
-public class BulletinBoardStore {
-    private static volatile BulletinBoardStore instance;
+public class AdBoardStore {
+    private static volatile AdBoardStore instance;
 
-    private BulletinBoard board = new BulletinBoard();
+    private AdBoard board = new AdBoard();
 
     @ToString.Exclude
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -20,7 +20,7 @@ public class BulletinBoardStore {
     @ToString.Exclude
     private final File database;
 
-    public BulletinBoardStore(String databasePath) {
+    public AdBoardStore(String databasePath) {
         this.database = new File(databasePath);
         try {
             if (this.database.createNewFile()) {
@@ -34,11 +34,11 @@ public class BulletinBoardStore {
         }
     }
 
-    public static BulletinBoardStore getInstance(String dbPath) {
+    public static AdBoardStore getInstance(String dbPath) {
         if (instance == null) {
-            synchronized (BulletinBoard.class) {
+            synchronized (AdBoard.class) {
                 if (instance == null) {
-                    instance = new BulletinBoardStore(dbPath);
+                    instance = new AdBoardStore(dbPath);
                 }
             }
         }
@@ -48,7 +48,7 @@ public class BulletinBoardStore {
     @Synchronized
     public void load() throws IOException {
         if (database.length() == 0) return;
-        board = objectMapper.readValue(database, BulletinBoard.class);
+        board = objectMapper.readValue(database, AdBoard.class);
     }
 
     @Synchronized
