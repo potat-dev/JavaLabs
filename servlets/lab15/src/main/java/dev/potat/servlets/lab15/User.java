@@ -12,7 +12,6 @@ public class User {
     private String password;  // хранить пароли в plaintext это круто!
 
     public User(String name) {
-        this.username = name;
-        this.password = name;  // безопасность!
+        this(name, name);  // безопасность!
     }
 }

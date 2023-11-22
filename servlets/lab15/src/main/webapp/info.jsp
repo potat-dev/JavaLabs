@@ -12,14 +12,10 @@
     <h3 class="text-xl font-semibold text-slate-400 text-center my-4">${message}</h3>
     <p class="text-center">
         <a href="${pageContext.request.contextPath}/"
-           class="text-blue-500 hover:underline">
-            Go to homepage
-        </a>
-        /
+           class="text-blue-500 hover:underline">Homepage</a>
+        ${" • "}
         <a href="${pageContext.request.contextPath}/add"
-           class="text-blue-500 hover:underline">
-            Add new advertisement
-        </a>
+           class="text-blue-500 hover:underline">New advertisement</a>
     </p>
 </div>
 </body>

@@ -22,10 +22,10 @@ public class AddServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);  // false = do not create new session
 
-        if (session != null) {
-            getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
-        } else {
+        if (session != null && session.getAttribute("name") == null) {
             returnUnauthorized(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
         }
     }
 
@@ -33,8 +33,12 @@ public class AddServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
 
-        if (session != null) {
-            String user = (String) session.getAttribute("username");
+        System.out.println(session.getAttribute("name"));
+
+        if (session.getAttribute("name") == null) {
+            returnUnauthorized(request, response);
+        } else {
+            String user = (String) session.getAttribute("name");
             String title = request.getParameter("title");
             String image = request.getParameter("image");
             String desc = request.getParameter("desc");
@@ -44,8 +48,6 @@ public class AddServlet extends HttpServlet {
             request.setAttribute("status", "Ad was added successfully!");
             request.setAttribute("message", "Go to main page and check!");
             getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
-        } else {
-            returnUnauthorized(request, response);
         }
     }
 
@@ -53,6 +55,7 @@ public class AddServlet extends HttpServlet {
         request.setAttribute("status", "Access denied!");
         request.setAttribute("message", "Authorization is required to access this page!");
         getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
+//        request.getRequestDispatcher("/info.jsp").forward(request, response);
     }
 
     public void destroy() {

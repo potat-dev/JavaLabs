@@ -2,10 +2,7 @@ package dev.potat.servlets.lab15;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -25,13 +22,15 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username + " - " + password);
 
         String status, message;
 
         if (userStore.check(new User(username, password))) {
-            HttpSession session = request.getSession(false);
-            if (session != null) session.setAttribute("username", username);
+            HttpSession session = request.getSession();
+            session.setAttribute("name", username);
+//            Cookie userNameCookie = new Cookie("username", username);
+//            userNameCookie.setMaxAge(30 * 60);
+//            response.addCookie(userNameCookie);
             // hehe
             status = "Login success!";
             message = "Now you can post your ads :)";
