@@ -28,9 +28,6 @@ public class LoginServlet extends HttpServlet {
         if (userStore.check(new User(username, password))) {
             HttpSession session = request.getSession();
             session.setAttribute("name", username);
-//            Cookie userNameCookie = new Cookie("username", username);
-//            userNameCookie.setMaxAge(30 * 60);
-//            response.addCookie(userNameCookie);
             // hehe
             status = "Login success!";
             message = "Now you can post your ads :)";

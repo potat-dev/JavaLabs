@@ -23,10 +23,8 @@ public class Advertisement {
     }
 
     private static String getNow() {
-        // get current date-time, with system default time zone
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss");
         ZonedDateTime now = ZonedDateTime.now();
-        // get current date-time, with a specified time zone
         ZonedDateTime japanDateTime = now.withZoneSameInstant(ZoneId.of("Europe/Moscow"));
         return dtf.format(japanDateTime);
     }

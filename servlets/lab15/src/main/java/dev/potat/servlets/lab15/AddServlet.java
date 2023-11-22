@@ -48,6 +48,7 @@ public class AddServlet extends HttpServlet {
             request.setAttribute("status", "Ad was added successfully!");
             request.setAttribute("message", "Go to main page and check!");
             getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
+            store.save();
         }
     }
 
@@ -55,7 +56,6 @@ public class AddServlet extends HttpServlet {
         request.setAttribute("status", "Access denied!");
         request.setAttribute("message", "Authorization is required to access this page!");
         getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
-//        request.getRequestDispatcher("/info.jsp").forward(request, response);
     }
 
     public void destroy() {
