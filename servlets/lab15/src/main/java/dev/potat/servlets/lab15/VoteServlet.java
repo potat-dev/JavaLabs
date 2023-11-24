@@ -10,8 +10,8 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 
-@WebServlet(name = "AddServlet", value = "/add")
-public class AddServlet extends HttpServlet {
+@WebServlet(name = "VoteServlet", value = "/vote")
+public class VoteServlet extends HttpServlet {
     private AdBoardStore store;
 
     @SneakyThrows
@@ -19,31 +19,20 @@ public class AddServlet extends HttpServlet {
         store = AdBoardStore.getInstance("db.json");
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        HttpSession session = request.getSession(false);  // false = do not create new session
-
-        if (session != null && session.getAttribute("name") == null) {
-            returnUnauthorized(request, response);
-        } else {
-            getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
-        }
-    }
-
     // Method to handle POST request from the form
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
+        boolean loggedIn = session != null && session.getAttribute("name") != null;
 
-        if (session != null && session.getAttribute("name") == null) {
+        if (!loggedIn) {
             returnUnauthorized(request, response);
         } else {
-            String user = (String) session.getAttribute("name");
-            String title = request.getParameter("title");
-            String image = request.getParameter("image");
-            String desc = request.getParameter("desc");
+            String id = request.getParameter("id");
+            String action = request.getParameter("action");
 
-            store.add(new Advertisement(title, image, desc, user));
+            store.getById(id).vote(action);
 
-            request.setAttribute("status", "Ad was added successfully!");
+            request.setAttribute("status", "Vote was added successfully!");
             request.setAttribute("message", "Go to main page and check!");
             getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
             store.save();

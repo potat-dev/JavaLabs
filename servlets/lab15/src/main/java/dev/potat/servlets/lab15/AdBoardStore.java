@@ -65,4 +65,9 @@ public class AdBoardStore {
     public void add(Advertisement ad) {
         board.add(ad);
     }
+
+    @Synchronized
+    public Advertisement getById(String id) {
+        return board.getById(id);
+    }
 }

@@ -13,4 +13,13 @@ public class AdBoard {
     public void add(Advertisement ad) {
         ads.add(ad);
     }
+
+    public Advertisement getById(String id) {
+        for (Advertisement ad : ads) {
+            if (ad.getId() != null && ad.getId().equals(id)) {
+                return ad;
+            }
+        }
+        return null;
+    }
 }
