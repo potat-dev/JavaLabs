@@ -30,7 +30,7 @@ public class Advertisement {
     }
 
     private static String getNow() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E, dd MMM yyyy HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
         ZonedDateTime now = ZonedDateTime.now();
         ZonedDateTime japanDateTime = now.withZoneSameInstant(ZoneId.of("Europe/Moscow"));
         return dtf.format(japanDateTime);

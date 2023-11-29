@@ -17,32 +17,33 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         <c:forEach var="ad" items="${ads}">
-            <div class="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col h-full border rounded-lg shadow bg-gray-800 border-gray-700">
                 <c:if test="${ad.getImage() != ''}">
                     <a href="${ad.getImage()}" target="_blank">
                         <img class="rounded-t-lg w-full aspect-[4/3]" src="${ad.getImage()}" alt="image"/>
                     </a>
                 </c:if>
                 <div class="flex-grow flex flex-col h-full p-5">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${ad.getTitle()}</h5>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${ad.getDesc()}</p>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Posted by ${ad.getUser()} • ${ad.getDate()}</p>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">${ad.getTitle()}</h5>
+                    <p class="mb-3 font-normal text-gray-400">${ad.getDesc()}</p>
 
-                    <c:if test="${login == true}">
-                        <div class="flex-grow h-full flex flex-col justify-items-end">
-                            <div class="mt-auto inline-flex rounded-md shadow-sm" role="group">
+                    <div class="flex-grow h-full flex flex-col justify-items-end">
+                        <p class="mt-auto mb-3 font-normal text-gray-400">
+                            Posted by ${ad.getUser()} • ${ad.getDate()}
+                        </p>
+                        <c:if test="${login == true}">
+                            <div class="inline-flex rounded-md shadow-sm" role="group">
                                 <button type="button" id="like-${ad.getId()}"
-                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                        class="inline-flex items-center px-4 py-2 text-sm font-medium border rounded-s-lg focus:z-10 bg-gray-700 border-gray-600 text-white hover:text-white hover:bg-gray-600 focus:text-white">
                                         ${ad.likedBy(user) ? "Liked" : "Like"} ${ad.getScore()}
                                 </button>
                                 <button type="button" id="dislike-${ad.getId()}"
-                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                                        class="inline-flex items-center px-4 py-2 text-sm font-medium border rounded-e-lg focus:z-10 bg-gray-700 border-gray-600 text-white hover:text-white hover:bg-gray-600 focus:text-white">
                                         ${ad.dislikedBy(user) ? "Disliked" : "Dislike"}
                                 </button>
                             </div>
-                        </div>
-                    </c:if>
-                        <%-- else: display only score--%>
+                        </c:if>
+                    </div>
                 </div>
             </div>
         </c:forEach>
