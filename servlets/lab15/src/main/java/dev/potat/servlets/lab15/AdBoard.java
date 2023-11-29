@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +22,9 @@ public class AdBoard {
             }
         }
         return null;
+    }
+
+    public void sort() {
+        ads.sort(Comparator.comparing(Advertisement::getScore).reversed());
     }
 }

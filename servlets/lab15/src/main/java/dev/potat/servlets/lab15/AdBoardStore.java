@@ -53,6 +53,7 @@ public class AdBoardStore {
 
     @Synchronized
     public void save() throws IOException {
+        board.sort();
         objectMapper.writeValue(database, board);
     }
 

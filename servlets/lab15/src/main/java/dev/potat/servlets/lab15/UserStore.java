@@ -62,14 +62,8 @@ public class UserStore {
     @Synchronized
     public boolean login(String user, String pass) {
         User u = getByName(user);
+        if (u == null) return false;
         return u.getPassword().equals(pass);
-    }
-
-    public User getById(String id) {
-        for (User user : users) {
-            if (user.getId().equals(id)) return user;
-        }
-        return null;
     }
 
     public User getByName(String name) {

@@ -26,16 +26,18 @@
                 <div class="flex-grow flex flex-col h-full p-5">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">${ad.getTitle()}</h5>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${ad.getDesc()}</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Posted by ${ad.getUser()} • ${ad.getDate()}</p>
+
                     <c:if test="${login == true}">
                         <div class="flex-grow h-full flex flex-col justify-items-end">
                             <div class="mt-auto inline-flex rounded-md shadow-sm" role="group">
                                 <button type="button" id="like-${ad.getId()}"
                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                        ${ad.likedBy(userId) ? "Liked" : "Like"} ${ad.getScore()}
+                                        ${ad.likedBy(user) ? "Liked" : "Like"} ${ad.getScore()}
                                 </button>
                                 <button type="button" id="dislike-${ad.getId()}"
                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                        ${ad.dislikedBy(userId) ? "Disliked" : "Dislike"}
+                                        ${ad.dislikedBy(user) ? "Disliked" : "Dislike"}
                                 </button>
                             </div>
                         </div>
@@ -54,13 +56,13 @@
             </a>
             <a href="${pageContext.request.contextPath}/logout"
                class="block rounded-md bg-red-500 text-white font-bold text-center mt-4 py-2 px-4">
-                Logged in! Click to Logout
+                Logged in as ${user}! Click to logout
             </a>
         </c:if>
         <c:if test="${login == false}">
             <a href="${pageContext.request.contextPath}/login"
                class="block rounded-md bg-red-500 text-white font-bold text-center mt-4 py-2 px-4">
-                Login to post Ads!
+                Login to post ads!
             </a>
         </c:if>
     </div>
@@ -71,14 +73,13 @@
     <script>
         $('[id^="like-"]').on('click', function () {
             const postId = this.id.substring(this.id.indexOf('-') + 1)  // извлекаем id поста
-            const isLiked = $(this).text().trim().endsWith('d');
+            const isLiked = $(this).text().includes('Liked');
             sendVote(postId, isLiked ? 'remove' : 'like');
         });
 
         $('[id^="dislike-"]').on('click', function () {
             const postId = this.id.substring(this.id.indexOf('-') + 1)  // извлекаем id поста
-            const isDisliked = $(this).text().trim().endsWith('d');
-            // console.log($(this).text());
+            const isDisliked = $(this).text().includes('Disliked');
             sendVote(postId, isDisliked ? 'remove' : 'dislike');
         });
 
@@ -88,7 +89,6 @@
                 url: '${pageContext.request.contextPath}/vote',
                 data: {id: id, action: action},
                 success: function (data) {
-                    // alert(data);
                     try {
                         const state = data.split(' ')[0];
                         const score = data.split(' ')[1];
@@ -101,22 +101,8 @@
         }
 
         function setButtonState(id, state, score) {
-            const likeBtn = $('#like-' + id);
-            const dislikeBtn = $('#dislike-' + id);
-            switch (state) {
-                case 'like':
-                    likeBtn.text('Liked ' + score);
-                    dislikeBtn.text('Dislike');
-                    break;
-                case 'dislike':
-                    likeBtn.text('Like ' + score);
-                    dislikeBtn.text('Disliked');
-                    break;
-                case 'remove':
-                    likeBtn.text('Like ' + score);
-                    dislikeBtn.text('Dislike');
-                    break;
-            }
+            $('#like-' + id).text((state === 'like' ? 'Liked ' : 'Like ') + score);
+            $('#dislike-' + id).text(state === 'dislike' ? 'Disliked' : 'Dislike');
         }
     </script>
 </c:if>

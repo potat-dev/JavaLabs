@@ -30,8 +30,7 @@ public class LoginServlet extends HttpServlet {
 
         if (userStore.login(username, password)) {
             HttpSession session = request.getSession();
-            String userId = userStore.getByName(username).getId();
-            session.setAttribute("id", userId);
+            session.setAttribute("user", username);
             // hehe
             status = "Login success!";
             message = "Now you can post your ads :)";

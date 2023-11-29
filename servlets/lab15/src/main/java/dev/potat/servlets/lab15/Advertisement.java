@@ -51,16 +51,16 @@ public class Advertisement {
         score = calcScore();
     }
 
-    public Vote getVoteBy(String userId) {
-        return votes.getOrDefault(userId, Vote.NONE);
+    public Vote getVoteBy(String user) {
+        return votes.getOrDefault(user, Vote.NONE);
     }
 
-    public boolean likedBy(String userId) {
-        return getVoteBy(userId) == Vote.LIKE;
+    public boolean likedBy(String user) {
+        return getVoteBy(user) == Vote.LIKE;
     }
 
-    public boolean dislikedBy(String userId) {
-        return getVoteBy(userId) == Vote.DISLIKE;
+    public boolean dislikedBy(String user) {
+        return getVoteBy(user) == Vote.DISLIKE;
     }
 
     private int calcScore() {
