@@ -31,11 +31,11 @@
                             <div class="mt-auto inline-flex rounded-md shadow-sm" role="group">
                                 <button type="button" id="like-${ad.getId()}"
                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                    Like ${ad.getScore()}
+                                        ${ad.likedBy(userId) ? "Liked" : "Like"} ${ad.getScore()}
                                 </button>
                                 <button type="button" id="dislike-${ad.getId()}"
                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-                                    Dislike
+                                        ${ad.dislikedBy(userId) ? "Disliked" : "Dislike"}
                                 </button>
                             </div>
                         </div>
@@ -71,20 +71,52 @@
     <script>
         $('[id^="like-"]').on('click', function () {
             const postId = this.id.substring(this.id.indexOf('-') + 1)  // извлекаем id поста
-            sendVote(postId, 'like');
+            const isLiked = $(this).text().trim().endsWith('d');
+            sendVote(postId, isLiked ? 'remove' : 'like');
         });
 
         $('[id^="dislike-"]').on('click', function () {
             const postId = this.id.substring(this.id.indexOf('-') + 1)  // извлекаем id поста
-            sendVote(postId, 'dislike');
+            const isDisliked = $(this).text().trim().endsWith('d');
+            // console.log($(this).text());
+            sendVote(postId, isDisliked ? 'remove' : 'dislike');
         });
 
-        function sendVote(postId, action) {
+        function sendVote(id, action) {
             $.ajax({
                 type: 'POST',
                 url: '${pageContext.request.contextPath}/vote',
-                data: {id: postId, action: action}
+                data: {id: id, action: action},
+                success: function (data) {
+                    // alert(data);
+                    try {
+                        const state = data.split(' ')[0];
+                        const score = data.split(' ')[1];
+                        setButtonState(id, state, score);
+                    } catch (e) {
+                        e.printStackTrace();
+                    }
+                }
             });
+        }
+
+        function setButtonState(id, state, score) {
+            const likeBtn = $('#like-' + id);
+            const dislikeBtn = $('#dislike-' + id);
+            switch (state) {
+                case 'like':
+                    likeBtn.text('Liked ' + score);
+                    dislikeBtn.text('Dislike');
+                    break;
+                case 'dislike':
+                    likeBtn.text('Like ' + score);
+                    dislikeBtn.text('Disliked');
+                    break;
+                case 'remove':
+                    likeBtn.text('Like ' + score);
+                    dislikeBtn.text('Dislike');
+                    break;
+            }
         }
     </script>
 </c:if>

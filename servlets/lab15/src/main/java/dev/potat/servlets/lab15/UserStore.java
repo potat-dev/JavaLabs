@@ -60,11 +60,23 @@ public class UserStore {
     }
 
     @Synchronized
-    public boolean check(User input) {
+    public boolean login(String user, String pass) {
+        User u = getByName(user);
+        return u.getPassword().equals(pass);
+    }
+
+    public User getById(String id) {
         for (User user : users) {
-            if (user.equals(input)) return true;
+            if (user.getId().equals(id)) return user;
         }
-        return false;
+        return null;
+    }
+
+    public User getByName(String name) {
+        for (User user : users) {
+            if (user.getUsername().equals(name)) return user;
+        }
+        return null;
     }
 
     private void addDummyUsers() {

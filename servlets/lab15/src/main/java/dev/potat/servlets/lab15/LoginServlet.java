@@ -2,7 +2,10 @@ package dev.potat.servlets.lab15;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -25,9 +28,10 @@ public class LoginServlet extends HttpServlet {
 
         String status, message;
 
-        if (userStore.check(new User(username, password))) {
+        if (userStore.login(username, password)) {
             HttpSession session = request.getSession();
-            session.setAttribute("name", username);
+            String userId = userStore.getByName(username).getId();
+            session.setAttribute("id", userId);
             // hehe
             status = "Login success!";
             message = "Now you can post your ads :)";

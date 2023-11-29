@@ -22,19 +22,24 @@ public class VoteServlet extends HttpServlet {
     // Method to handle POST request from the form
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
-        boolean loggedIn = session != null && session.getAttribute("name") != null;
+        boolean loggedIn = session != null && session.getAttribute("id") != null;
 
         if (!loggedIn) {
             returnUnauthorized(request, response);
         } else {
             String id = request.getParameter("id");
             String action = request.getParameter("action");
+            String userId = (String) session.getAttribute("id");
 
-            store.getById(id).vote(action);
+            Advertisement ad = store.getById(id);
+            ad.vote(userId, action);
 
-            request.setAttribute("status", "Vote was added successfully!");
-            request.setAttribute("message", "Go to main page and check!");
-            getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
+//            request.setAttribute("status", "Vote was added successfully!");
+//            request.setAttribute("message", "Go to main page and check!");
+//            getServletContext().getRequestDispatcher("/info.jsp").forward(request, response);
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(action + ' ' + ad.getScore());
             store.save();
         }
     }

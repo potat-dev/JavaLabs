@@ -22,7 +22,7 @@ public class AddServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);  // false = do not create new session
 
-        if (session != null && session.getAttribute("name") == null) {
+        if (session != null && session.getAttribute("id") == null) {
             returnUnauthorized(request, response);
         } else {
             getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
@@ -33,10 +33,10 @@ public class AddServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
 
-        if (session != null && session.getAttribute("name") == null) {
+        if (session != null && session.getAttribute("id") == null) {
             returnUnauthorized(request, response);
         } else {
-            String user = (String) session.getAttribute("name");
+            String user = (String) session.getAttribute("id");
             String title = request.getParameter("title");
             String image = request.getParameter("image");
             String desc = request.getParameter("desc");

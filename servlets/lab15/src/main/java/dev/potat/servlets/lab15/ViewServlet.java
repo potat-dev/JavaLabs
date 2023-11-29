@@ -23,8 +23,12 @@ public class ViewServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("ads", store.getAds());
         HttpSession session = request.getSession(false);  // false = do not create new session
-        boolean loggedIn = session != null && session.getAttribute("name") != null;
+        boolean loggedIn = session != null && session.getAttribute("id") != null;
         request.setAttribute("login", loggedIn);
+        if (loggedIn) {
+            String userId = (String) session.getAttribute("id");
+            request.setAttribute("userId", userId);
+        }
         getServletContext().getRequestDispatcher("/view.jsp").forward(request, response);
     }
 

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 @Data
 @NoArgsConstructor
@@ -19,10 +20,13 @@ public class Advertisement {
     private String desc;
     private String user;
     private String date;
+
     private int score;
+    private HashMap<String, Vote> votes;
+
 
     public Advertisement(String title, String image, String desc, String user) {
-        this(NanoIdUtils.randomNanoId(), title, image, desc, user, getNow(), 0);
+        this(NanoIdUtils.randomNanoId(), title, image, desc, user, getNow(), 0, new HashMap<>());
     }
 
     private static String getNow() {
@@ -32,11 +36,42 @@ public class Advertisement {
         return dtf.format(japanDateTime);
     }
 
-    public void vote(String action) {
-        if (action.equals("like")) {
-            score++;
-        } else if (action.equals("dislike")) {
-            score--;
+    public void vote(String userId, String action) {
+        switch (action) {
+            case "like":
+                votes.put(userId, Vote.LIKE);
+                break;
+            case "dislike":
+                votes.put(userId, Vote.DISLIKE);
+                break;
+            case "remove":
+                votes.remove(userId);
+                break;
         }
+        score = calcScore();
+    }
+
+    public Vote getVoteBy(String userId) {
+        return votes.getOrDefault(userId, Vote.NONE);
+    }
+
+    public boolean likedBy(String userId) {
+        return getVoteBy(userId) == Vote.LIKE;
+    }
+
+    public boolean dislikedBy(String userId) {
+        return getVoteBy(userId) == Vote.DISLIKE;
+    }
+
+    private int calcScore() {
+        int score = 0;
+        for (Vote vote : votes.values()) {
+            score += (vote == Vote.LIKE ? 1 : -1);
+        }
+        return score;
+    }
+
+    public enum Vote {
+        NONE, LIKE, DISLIKE
     }
 }
