@@ -25,17 +25,13 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-  compileOnly('jakarta.servlet:jakarta.servlet-api:5.0.0')
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-  implementation("org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1")
-  implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0")
-  implementation('com.aventrix.jnanoid:jnanoid:2.0.0')
+  compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
 
-  testImplementation('org.junit.jupiter:junit-jupiter:5.8.1')
+  implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.0'
+
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
 
 test {
-  useJUnitPlatform()
-}
+useJUnitPlatform()}
