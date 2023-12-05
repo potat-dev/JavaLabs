@@ -1,8 +1,12 @@
 package dev.potat.servlets.lab16;
 
-import java.io.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 @WebServlet(name = "ListServlet", value = "/")
 public class ListServlet extends HttpServlet {
@@ -12,14 +16,9 @@ public class ListServlet extends HttpServlet {
         store = ListStore.getInstance("db.yaml");
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + store.toString() + "</h1>");
-        out.println("</body></html>");
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute("list", store.getItems());
+        getServletContext().getRequestDispatcher("/view.jsp").forward(request, response);
     }
 
     public void destroy() {

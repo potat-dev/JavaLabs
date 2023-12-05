@@ -69,5 +69,6 @@ public class ListStore {
         items.add(new ListItem("Birds", List.of("Chicken", "Eagle", "Parrot")));
         items.add(new ListItem("Fish", List.of("Salmon", "Tuna")));
         items.add(new ListItem("Insects", List.of("Ant", "Butterfly", "Spider")));
+        items.add(new ListItem("Getz Family", List.of("Nastya", "Maksim", "Denis")));
     }
 }
