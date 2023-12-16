@@ -1,0 +1,104 @@
+{
+  "ads": [
+    {
+      "id": "iOI8LszGQcnzq0X-KgC4X",
+      "title": "ПРОДАМ САМОЛЕТ",
+      "image": "https://static.mk.ru/upload/entities/2023/05/28/09/articles/detailPicture/b0/96/27/a2/9fcfdc1e3989bf3d786febbd7d690909.jpg",
+      "desc": "✈ во какой крутой, смотри! Захотелось?? не жди, покупай!!!",
+      "user": "nastya",
+      "date": "29 Nov 2023, 16:52",
+      "score": 4,
+      "votes": {
+        "potat": "LIKE",
+        "maksim": "LIKE",
+        "user": "LIKE",
+        "nastya": "LIKE"
+      }
+    },
+    {
+      "id": "errxYQdXHh_iS91Rskeds",
+      "title": "Показываю рыбов",
+      "image": "https://pasteimg.com/images/2023/12/16/image78f8ce354aab3bbb.jpg",
+      "desc": "Важно: Я НЕ ПРОДАЮ РЫБОВ, просто показываю! Не пишите в ЛС \"красивое\", я и сам знаю что оно красивое!!!",
+      "user": "maksim",
+      "date": "29 Nov 2023, 16:54",
+      "score": 3,
+      "votes": {
+        "potat": "LIKE",
+        "maksim": "LIKE",
+        "nastya": "LIKE"
+      }
+    },
+    {
+      "id": "xrg0UumcfIoCY66OBZSn7",
+      "title": "Помогите достать самолет",
+      "image": "https://www.obninsk.name/UserFiles/Image/202205/99665_7635951231424014467_gmb0hvg_1a02zstia82ibrupqeafzxy1sxgs58zgxbgnkncgjvckiltzbkm3iepk1zhunq_myjoacl8cni7kpvrf-0.jpg",
+      "desc": "Я уже второй день не могу достать свой самолет. Мне ОЧЕНЬ грустно, я ищу людей кто готов мне помочь. \r\nВсе на альтруизме, без оплаты (ну реально, мне и так грустно, у меня самолет застрял)",
+      "user": "nastya",
+      "date": "29 Nov 2023, 17:21",
+      "score": 2,
+      "votes": {
+        "potat": "LIKE",
+        "maksim": "LIKE"
+      }
+    },
+    {
+      "id": "DNiOQR2NohDk7qKqF4Wp_",
+      "title": "Ищу сыр косичку!",
+      "image": "https://gcdnb.pbrd.co/images/G3gKS8VzSR6A.webp?o=1",
+      "desc": "Помогите найти сыр косичку пожалуйста((((( Я не могу найти её никак",
+      "user": "maksim",
+      "date": "29 Nov 2023, 17:17",
+      "score": 2,
+      "votes": {
+        "maksim": "LIKE",
+        "nastya": "LIKE"
+      }
+    },
+    {
+      "id": "k6SKQvOqC9rLk9NaFIQqe",
+      "title": "Продам диплом",
+      "image": "https://opis-cdn.tinkoffjournal.ru/mercury/diploma-types-08.uwmals..jpg",
+      "desc": "Продам за ненадобностью. БУ. Использовался как коврик для мыши, и иногда для того чтобы накрывать дошик",
+      "user": "maksim",
+      "date": "29 Nov 2023, 17:04",
+      "score": 1,
+      "votes": {
+        "potat": "LIKE"
+      }
+    },
+    {
+      "id": "XaOpenCYdhCxrfA5_MiEg",
+      "title": "Футболка с ВАШИМ принтом!",
+      "image": "https://storage.vsemayki.ru/images/0/2/2946/2946725/previews/people_4_manshortfull_front_white_500.jpg",
+      "desc": "Самое лучшее качество, фирменные футболки, ПОКУПАЕМ ПОКУПАЕМ!!",
+      "user": "user",
+      "date": "29 Nov 2023, 16:58",
+      "score": 0,
+      "votes": {}
+    },
+    {
+      "id": "Pky_ZMoJlwEU5UkLOR6H9",
+      "title": "Продам котят",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyB_wXoftQ5Pc-Ychz4Pl_fUUITFMi80XGTcvldPG0CgYCQZ0xm1N3i8kd9B6AhOwSCHI&usqp=CAU",
+      "desc": "они такие дурачки, просто жесть",
+      "user": "user",
+      "date": "29 Nov 2023, 21:24",
+      "score": 0,
+      "votes": {}
+    },
+    {
+      "id": "YoI1EIarzFJo94JsUD-Ql",
+      "title": "Горячие ЛАБЫ в 300м от тебя \uD83D\uDD25\uD83D\uDD25\uD83D\uDD25",
+      "image": "https://dosrochnik.ru/img/laba-rabota.jpg",
+      "desc": "Они очень ХОТЯТ чтобы ты их СДАЛ!!! Сдай их быстрее, Линский ОЧЕНЬ этого ждет!!! \uD83E\uDD75\uD83D\uDCA6\uD83D\uDCA6",
+      "user": "potat",
+      "date": "29 Nov 2023, 17:01",
+      "score": -2,
+      "votes": {
+        "maksim": "DISLIKE",
+        "nastya": "DISLIKE"
+      }
+    }
+  ]
+}

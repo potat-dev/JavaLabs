@@ -49,7 +49,7 @@
         </c:forEach>
     </div>
 
-    <div class="gap-4 pb-8 grid grid-flow-col justify-stretch md:flex md:justify-center">
+    <div class="gap-4 pb-8 pt-4 grid grid-flow-col justify-stretch md:flex md:justify-center">
         <c:if test="${login == true}">
             <a href="${pageContext.request.contextPath}/add"
                class="block rounded-md bg-blue-500 text-white font-bold text-center mt-4 py-2 px-4">
@@ -57,7 +57,7 @@
             </a>
             <a href="${pageContext.request.contextPath}/logout"
                class="block rounded-md bg-red-500 text-white font-bold text-center mt-4 py-2 px-4">
-                Logged in as ${user}! Click to logout
+                Logged in as ${user}, click to logout
             </a>
         </c:if>
         <c:if test="${login == false}">
