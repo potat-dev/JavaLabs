@@ -1,2 +1,5 @@
 rootProject.name = 'JavaLabs'
-include 'servlets'
+
+include 'servlets:lab13'
+include 'servlets:lab15'
+include 'servlets:lab16'
